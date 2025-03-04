@@ -1,1 +1,47 @@
+# READ MAPPING EXERCISE 
+# use a dataset of Illumina whole-genome sequencing 
+
+# 1.1 Start an interactive Slurm session and load software
+  interactive-bio-ds # following command to start an interactive job where you can run commands without necessarily
+                        having to submit Slurm jobs for every command:
+module load bwa/0.7.17
+module load samtools/1.21
+
+# 2.1 Copy your chosen dataset
+  /gpfs/data/BIO-DSB/Session5/datasets/
+
+  pwd #check which folder you are in
+  mkdir read-mapping #creates a new directory
+  cd read-mapping/ #move into the new folder
+  cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* . #copy both files
+  ls -ltrh #check the files are now here
+
+#3.1 Study your input files
+  zless datasetX_1.fastq.gz           #less for gzipped files. “q” to exit
+  zcat datasetX_1.fastq.gz | head     #cat for gzipped files, piped into head
+  zcat datasetX_1.fastq.gz | wc -l    #pipe into wc to count lines
+
+#4.1  Study the reference genome
+  bwa index /gpfs/data/BIO-DSB/Session5/ref/human-ref-GRCh38.fasta
+
+#5.1 Align reads to the reference genome
+  bwa mem /path/to/reference.fasta datasetX_1.fastq.gz datasetX_2.fastq.gz > X.sam
+  /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh
+
+#6.1 Convert SAM to BAM format
+
+#7.1 Sort the BAM file
+  samtools view -h file.bam | less -S
+
+#8.1 Index the BAM file
+  samtools idxstats
+
+#9.1 Extract mapping statistics
+  samtools flagstat
+
+#10.1 Study coverage across chromosomes
+
+#11.1 Determine sex chromosome karyotype
+
+#12.1 Estimate mitochondrial copy number
 
