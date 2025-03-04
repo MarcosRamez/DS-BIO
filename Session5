@@ -2,26 +2,28 @@
 # use a dataset of Illumina whole-genome sequencing 
 
 # 1.1 Start an interactive Slurm session and load software
-  interactive-bio-ds # following command to start an interactive job where you can run commands without necessarily
-                        having to submit Slurm jobs for every command:
-module load bwa/0.7.17
-module load samtools/1.21
+    interactive-bio-ds                                     # interactive job run commands without necessarily having to submit Slurm jobs for every command
+        module load bwa/0.7.17                             # loading bwa 
+        module load samtools/1.21                          # loading samtools 
 
 # 2.1 Copy your chosen dataset
   /gpfs/data/BIO-DSB/Session5/datasets/
 
-  pwd #check which folder you are in
-  mkdir read-mapping #creates a new directory
-  cd read-mapping/ #move into the new folder
-  cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* . #copy both files
-  ls -ltrh #check the files are now here
+  pwd                                                      # check which folder you are in
+  mkdir read-mapping                                       # creates a new directory
+  cd read-mapping/                                         # move into the new folder
+  cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .     # copy both files
+  ls -ltrh                                                 # check the files are now here
 
 #3.1 Study your input files
-  zless datasetX_1.fastq.gz           #less for gzipped files. “q” to exit
-  zcat datasetX_1.fastq.gz | head     #cat for gzipped files, piped into head
-  zcat datasetX_1.fastq.gz | wc -l    #pipe into wc to count lines
+  zless datasetT_1.fastq.gz                                # less for gzipped files. “q” to exit
+  zcat datasetT_1.fastq.gz | head                          # cat for gzipped files, piped into head
+  zcat datasetT_1.fastq.gz | wc -l                         # pipe into wc to count lines
+
+             # We can look at both datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz '
 
 #4.1  Study the reference genome
+ 
   bwa index /gpfs/data/BIO-DSB/Session5/ref/human-ref-GRCh38.fasta
 
 #5.1 Align reads to the reference genome
