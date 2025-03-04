@@ -9,13 +9,16 @@
             samtools                                       # lists samtools command options/functions
 
 # 2.1 Copy your chosen dataset
-  /gpfs/data/BIO-DSB/Session5/datasets/
-
-  pwd                                                      # check which folder you are in
-  mkdir read-mapping                                       # creates a new directory
-  cd read-mapping/                                         # move into the new folder
-  cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .     # copy both files
-  ls -ltrh                                                 # check the files are now here
+  cd /gpfs/data/BIO-DSB/Session5/datasets/                                     # access the directory 
+                # Choose the datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz ' 
+                # move them using cp from ~/gpfs../datasets/ to ~/read-mapping 
+  pwd                                                                          # check which folder you are in
+  mkdir read-mapping                                                           # creates a new directory
+  cd read-mapping/                                                             # change directory to readmapping 
+# cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .                         # copy both files
+  cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_1.fastq.gz read-mapping/    # copy T1 files
+  cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_2.fastq.gz read-mapping/ `  # copy T2 files
+  ls -ltrh                                                                     # check the files are now here
 
 #3.1 Study your input files
   zless datasetT_1.fastq.gz                                # less for gzipped files. “q” to exit
