@@ -4,49 +4,49 @@
   # Yield results 
 
 #############################################
-# preparing our R code source and environment, we install the required packages and run the necessary libraries to use the necessary functions
+# 1.1 preparing our R code source and environment, we install the required packages and run the necessary libraries to use the necessary functions
 
-    install.packages("tidyverse")    # installing the tidverse package 
+    install.packages("tidyverse")    # installing the tidyverse package 
           library(tidyverse)         # loading installed package using library function for further function tool loads
 
-# GWAS_data zip file was downloaded which was unzipped and opened containing 3 files; 
-                        # Chr12_Genotypes.tsv, Chr12_Map.tsv and Phenotype_Height.tsv
+# 1.2a GWAS_data zip file was downloaded which was unzipped and opened containing 3 files; 
+           # Chr12_Genotypes.tsv, Chr12_Map.tsv and Phenotype_Height.tsv
 
-# Renaming the downloaded datasets in R Source code to load in the R environment 
+# 1.2b Renaming the downloaded datasets in R Source code to load in the R environment 
 
     genotypes<-read_tsv("~/Downloads/GWAS_data/Chr12_Genotypes.tsv")
     map<-read_tsv("~/Downloads/GWAS_data/Chr12_Map.tsv")
     phenotypes<-read_tsv("~/Downloads/GWAS_data/Phenotype_Height.tsv") 
 
 ########################## 
-# Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we use ggplot function 
+# 2.1 Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we use ggplot function 
 
-  ggplot(phenotypes, aes(x=Height)) + geom_histogram()  
-  ggplot(map, aes(x=Position)) + geom_histogram()
+    ggplot(phenotypes, aes(x=Height)) + geom_histogram()  # using the ggplot function, we use the phenotypes dataset, we employ an aesthetic mapping of height (x-axis) and plot a histogram by binning (y-axis) data count into discrete values
+    ggplot(map, aes(x=Position)) + geom_histogram()       # using the ggplot function, we use the map dataset, we employ an aesthetic mapping of chromosomal positions (x-axis) and plot a histogram by binning (y-axis) data count into discrete values
 
-##########################
-row1 = genotypes[2,] ###converting it into vector
-one_geno = as.numeric(row1)
-one_geno = as.numeric(genotypes[2,])
+# 2.2 Converting column datasets into a vector  
 
-one_geno = as.numeric(genotypes[2,])
+    row1 = genotypes[2,]                                  # extracting row 2 from genotypes dataset and all columns into renamed 'row 1' dataframe
+    one_geno = as.numeric(row1)                           # as.numeric function converts all quantitative values along the row. Qualitative values are listed as NA
+        # one_geno = as.numeric(genotypes[2,])            # alternatively this function can combine both, instead of the first renaming step 
 
-mean(one_geno)
-?mean
+    mean(one_geno)                                        # finding the mean of all the row 
+         ?mean                                            # R Documentation syntax method to open 'arithmetic mean' definition in the 'Help' view (bottom right quarter)  
+         one_geno                                         # Will display the one_geno value list in the 'Console' view nsole (bottom left quarter)                                    
+    mean(one_geno, na.rm=TRUE)/2                          # computing the mean of one_geno and dividing the results by 2 to scale down the results. na.rm=TRUE ignores NA qualitative values.  
 
-one_geno
-mean(one_geno, na.rm=TRUE)/2
+##############################
 
-mean(as.numeric(genotypes[2,]), na.rm=TRUE)/2 ####nesting
-
-apply(genotypes,1,mean,na.rm=TRUE)/2
+mean(as.numeric(genotypes[2,]), na.rm=TRUE)/2                                   # nesting 
+    apply(genotypes,1,mean,na.rm=TRUE)/2
 
 allele_frequencies = apply(genotypes,1,mean,na.rm=TRUE)/2
-plot_data = tibble(allele_frequencies)
+    plot_data = tibble(allele_frequencies)
 
-ggplot(plot_data, aes(allele_frequencies)) + geom_histogram() #### same function as below
-ggplot(tibble(allele_frequencies), aes(x=allele_frequencies)) + geom_histogram() #### same function as top
+ggplot(plot_data, aes(allele_frequencies)) + geom_histogram()                    # same function as below
+ggplot(tibble(allele_frequencies), aes(x=allele_frequencies)) + geom_histogram() # same function as top
 
+#############################
 phenotypes$geo = one_geno
 phenotypes$one_geo = as.numeric(one_geno)
 
