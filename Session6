@@ -1,15 +1,28 @@
-#Exploring the association between genotypes and phenotypes 
+#Exploring the Association between Genotypes and Phenotypes
+# Project Overview; 
+  #Run R code and perform ggplot associations 
+  #Yield results 
 
-install.packages("tidyverse")    #installing the tidverse package 
-library(tidyverse)               #loading installed package to use its functions later on
+########################## 
+#preparing our R code source and environment, we install the required packages and run the necessary libraries to use the necessary functions
+    install.packages("tidyverse")    #installing the tidverse package 
+          library(tidyverse)         #loading installed package using library function for further function tool loads
 
-genotypes<-read_tsv("~/Desktop/DS-BIO/SESSION_6/GWAS_data/Chr12_Genotypes.tsv")
-map<-read_tsv("~/Desktop/DS-BIO/SESSION_6/GWAS_data/Chr12_Map.tsv")
-phenotypes<-read_tsv("~/Desktop/DS-BIO/SESSION_6/GWAS_data/Phenotype_Height.tsv") #naming the data in enviroment
+#GWAS_data zip file was downloaded which was unzipped and opened containing 3 files; 
+                        #Chr12_Genotypes.tsv, Chr12_Map.tsv and Phenotype_Height.tsv
 
-##########################
-ggplot(phenotypes, aes(x=Height)) + geom_histogram()
-ggplot(map, aes(x=Position)) + geom_histogram()
+########################## 
+#Renaming the downloaded datasets in R Source code to load in the R environment 
+
+    genotypes<-read_tsv("~/Downloads/GWAS_data/Chr12_Genotypes.tsv")
+    map<-read_tsv("~/Downloads/GWAS_data/Chr12_Map.tsv")
+    phenotypes<-read_tsv("~/Downloads/GWAS_data/Phenotype_Height.tsv") 
+
+########################## 
+#Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we use ggplot function 
+
+  ggplot(phenotypes, aes(x=Height)) + geom_histogram()  
+  ggplot(map, aes(x=Position)) + geom_histogram()
 
 ##########################
 row1 = genotypes[2,] ###converting it into vector
