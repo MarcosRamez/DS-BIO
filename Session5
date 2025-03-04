@@ -4,7 +4,9 @@
 # 1.1 Start an interactive Slurm session and load software
     interactive-bio-ds                                     # interactive job run commands without necessarily having to submit Slurm jobs for every command
         module load bwa/0.7.17                             # loading bwa 
+            bwa                                            # lists bwa command options/functions
         module load samtools/1.21                          # loading samtools 
+            samtools                                       # lists samtools command options/functions
 
 # 2.1 Copy your chosen dataset
   /gpfs/data/BIO-DSB/Session5/datasets/
