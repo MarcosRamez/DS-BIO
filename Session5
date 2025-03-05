@@ -3,26 +3,27 @@
 
 # 1.1 Start an interactive Slurm session and load software
     interactive-bio-ds                                     # interactive job run commands without necessarily having to submit Slurm jobs for every command
-        module load bwa/0.7.17                             # loading bwa 
-            bwa                                            # lists bwa command options/functions
-        module load samtools/1.21                          # loading samtools 
-            samtools                                       # lists samtools command options/functions
+        module load bwa/0.7.17                                 # loading bwa 
+            bwa                                                    # lists bwa command options/functions
+        module load samtools/1.21                              # loading samtools 
+            samtools                                               # lists samtools command options/functions
 
 # 2.1 Copy your chosen dataset
-  cd /gpfs/data/BIO-DSB/Session5/datasets/                                     # access the directory 
+      cd /gpfs/data/BIO-DSB/Session5/datasets/                                             # access the directory 
                 # Choose the datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz ' 
                 # move them using cp from ~/gpfs../datasets/ to ~/read-mapping 
-  pwd                                                                                  # check which folder you are in
-      mkdir read-mapping                                                                   # creates a new directory
-      cd read-mapping/                                                                     # change directory to readmapping 
-# cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .                                 # copy both files
-      cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_1.fastq.gz read-mapping/            # copy T1 files
-      cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_2.fastq.gz read-mapping/            # copy T2 files
-  cp /gpfs/data/BIO-DSB/Session5/ref read-mapping/      					           # copy ref folder 
-  cp /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh read-mapping/      # copy Ex. SLURM shell file 
+      pwd                                                                                  # check which folder you are in
+          mkdir read-mapping                                                                   # creates a new directory
+          cd read-mapping/                                                                     # change directory to read-mapping 
+
+    # cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .                                 # copy both files
+          cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_1.fastq.gz read-mapping/            # copy T1 files
+          cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_2.fastq.gz read-mapping/            # copy T2 files
+      cp /gpfs/data/BIO-DSB/Session5/ref read-mapping/      					           # copy ref folder 
+      cp /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh read-mapping/      # copy Ex. SLURM shell file 
   
-  ls -ltrh                                                                             # check the files are now here
-      ls                                                                                   # alternatively ls for simplicity
+      ls -ltrh                                                                             # check the files are now here
+          ls                                                                                   # alternatively ls for simplicity
 
 # 3.1 Study your input files
 
