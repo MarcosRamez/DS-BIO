@@ -26,7 +26,7 @@
 
   zless datasetT_1.fastq.gz                                # less for gzipped files. “q” to exit
   zcat datasetT_1.fastq.gz | head                          # cat for gzipped files, piped into head
-  zcat datasetT_1.fastq.gz | wc -l                         # pipe into wc to count lines
+  zcat datasetT_1.fastq.gz | wc -l                         # pipe into wc to count lines                                                                                        
   head human-ref-GRh38.fasta 		                       # can use head or less for non .gz files
              # We can look at both datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz '
              # Datasets have to be the same pair (S1-S2 or R1-R2, as different datasets have different wc -l) 
