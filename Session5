@@ -12,15 +12,17 @@
   cd /gpfs/data/BIO-DSB/Session5/datasets/                                     # access the directory 
                 # Choose the datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz ' 
                 # move them using cp from ~/gpfs../datasets/ to ~/read-mapping 
-  pwd                                                                          # check which folder you are in
-  mkdir read-mapping                                                           # creates a new directory
-  cd read-mapping/                                                             # change directory to readmapping 
-# cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .                         # copy both files
-  cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_1.fastq.gz read-mapping/    # copy T1 files
-  cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_2.fastq.gz read-mapping/    # copy T2 files
-  cp /gpfs/data/BIO-DSB/Session5/ref read-mapping/      					   # copy ref folder 
-  ls -ltrh                                                                     # check the files are now here
-  ls                                                                           # alternatively ls for simplicity
+  pwd                                                                                  # check which folder you are in
+      mkdir read-mapping                                                                   # creates a new directory
+      cd read-mapping/                                                                     # change directory to readmapping 
+# cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .                                 # copy both files
+      cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_1.fastq.gz read-mapping/            # copy T1 files
+      cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_2.fastq.gz read-mapping/            # copy T2 files
+  cp /gpfs/data/BIO-DSB/Session5/ref read-mapping/      					           # copy ref folder 
+  cp /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh read-mapping/      # copy Ex. SLURM shell file 
+  
+  ls -ltrh                                                                             # check the files are now here
+      ls                                                                                   # alternatively ls for simplicity
 
 # 3.1 Study your input files
 
