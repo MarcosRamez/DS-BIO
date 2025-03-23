@@ -2,6 +2,7 @@
 # use a dataset of Illumina whole-genome sequencing 
 
 # 1.1 Start an interactive Slurm session and load software
+
     interactive-bio-ds                                     # interactive job run commands without necessarily having to submit Slurm jobs for every command
         module load bwa/0.7.17                                 # loading bwa 
             bwa                                                    # lists bwa command options/functions
@@ -9,11 +10,13 @@
             samtools                                               # lists samtools command options/functions
 
 # 2.1 Copy your chosen dataset
+
       cd /gpfs/data/BIO-DSB/Session5/datasets/                                             # access the directory 
                 # Choose the datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz ' 
-                # move them using cp from ~/gpfs../datasets/ to ~/read-mapping 
+                # move them using cp from ~/gpfs/../datasets/ to ~/read-mapping 
+      cd ~                                                                                 # go to the home directory 
       pwd                                                                                  # check which folder you are in
-          mkdir read-mapping                                                                   # creates a new directory
+          mkdir read-mapping                                                                   # creates a new directory called read-mapping
           cd read-mapping/                                                                     # change directory to read-mapping 
 
     # cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .                                 # copy both files
@@ -25,35 +28,53 @@
       ls -ltrh                                                                             # check the files are now here
           ls                                                                                   # alternatively ls for simplicity
 
+    # can also use filezilla 
+
 # 3.1 Study your input files
 
-  zless datasetT_1.fastq.gz                                # less for gzipped files. “q” to exit
-  zcat datasetT_1.fastq.gz | head                          # cat for gzipped files, piped into head
-  zcat datasetT_1.fastq.gz | wc -l                         # pipe into wc to count lines                                                                                        
-  head human-ref-GRh38.fasta 		                       # can use head or less for non .gz files
-             # We can look at both datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz '
-             # Datasets have to be the same pair (S1-S2 or R1-R2, as different datasets have different wc -l) 
+        zless datasetT_1.fastq.gz                                # less for gzipped files. “q” to exit        
+        zcat datasetT_1.fastq.gz | head                          # cat for gzipped files, piped into head
+        zcat datasetT_1.fastq.gz | wc -l                         # pipe into wc to count lines                                                                                        
+        head human-ref-GRh38.fasta 		                         # can use head or less for non .gz files
+                # We can look at both datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz '
+                # Datasets have to be the same pair (S1-S2 or R1-R2, as different datasets have different wc -l) 
 
 #4.1  Study the reference genome
- 
-  bwa index /gpfs/data/BIO-DSB/Session5/ref/human-ref-GRCh38.fasta
 
-#5.1 Align reads to the reference genome
-  bwa mem /path/to/reference.fasta datasetX_1.fastq.gz datasetX_2.fastq.gz > X.sam
-  /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh
+        bwa index /gpfs/data/BIO-DSB/Session5/ref/human-ref-GRCh38.fasta      # The FASTA file has been indexed for human-ref-GRCh38 reference genome
+                # human-ref-GRCh38.fasta .fai .amb .pac .ann .sa .bwt are the following indexes 
+        ls -ltrh /gpfs/data/BIO-DSB/Session5/ref/
+                # you can check the following list to see the index list 
+
+#5.1 Align reads to the reference genome******* 
+
+        cd /gpfs/data/BIO-DSB/Session5/ref/
+        cp human-ref-GRCh38.fasta ~/read-mapping
+        bwa mem ~/read-mapping/human-ref-GRCh38.fasta
+        bwa mem ~/read-mapping/human-ref-GRCh38.fasta datasetT_1.fastq.gz datasetT_2.fastq.gz > X.sam ******
+        /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh
+        .STDOUT and .STDERR ********
 
 #6.1 Convert SAM to BAM format
-
+ less -S
+ 
 #7.1 Sort the BAM file
-  samtools view -h file.bam | less -S
+ samtools view
+ samtools view -h file.bam | less -S
 
 #8.1 Index the BAM file
-  samtools idxstats
+ samtools idxstats
+ samtools
+ index” command, and results in a small file with a “.bai” extension
 
 #9.1 Extract mapping statistics
-  samtools flagstat
+ samtools flagstat
 
 #10.1 Study coverage across chromosomes
+ samtools coverage
+ coverage
+ meandepth 
+ column -t 
 
 #11.1 Determine sex chromosome karyotype
 
