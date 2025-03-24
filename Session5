@@ -55,6 +55,8 @@
         /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh
         .STDOUT and .STDERR ********
 
+Don't fgorget SLURM
+
 #6.1 Convert SAM to BAM format
  less -S
  
