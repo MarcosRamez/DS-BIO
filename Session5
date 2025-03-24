@@ -54,15 +54,23 @@
         bwa mem ~/read-mapping/human-ref-GRCh38.fasta datasetT_1.fastq.gz datasetT_2.fastq.gz > X.sam ******
         /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh
         .STDOUT and .STDERR ********
+         Map.STDOUT
+         Map.STDERR 
 
-Don't fgorget SLURM
+nano Example_SLURM_submission_script.sh 
+Don't forget SLURM
 
 #6.1 Convert SAM to BAM format
  less -S
- 
+
+samtools view -b resultrun.sam -o resultrun.bam 
+
 #7.1 Sort the BAM file
  samtools view
  samtools view -h file.bam | less -S
+samtools view resultrun.sam
+resultrun.bam
+
 
 #8.1 Index the BAM file
  samtools idxstats
