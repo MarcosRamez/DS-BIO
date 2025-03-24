@@ -58,7 +58,8 @@
          Map.STDERR 
 
 nano Example_SLURM_submission_script.sh 
-Don't forget SLURM
+sbatch Example_SLURM_submission_script.sh 
+sacct 
 
 #6.1 Convert SAM to BAM format
  less -S
