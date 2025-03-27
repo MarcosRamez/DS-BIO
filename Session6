@@ -37,21 +37,22 @@
         # mean(as.numeric(one_geno), na.rm=TRUE)/2        # **********nesting example; alternative example to the previous line 
     apply(genotypes, 1, mean, na.rm=TRUE)/2               # **********using column 1 of the genotypes dataset, 
 
-##############################
-allele_frequencies = apply(genotypes, 1, mean, na.rm=TRUE)/2
-    plot_data = tibble(allele_frequencies)
+############################## (pp. 16) 
+allele_frequencies = apply(genotypes, 1, mean, na.rm=TRUE)/2    # quanitifiying the allele frequency; selecting genotypes row, removing all NA values
+    plot_data = tibble(allele_frequencies)                      # plotting the result using tibble function data frame 
 
 ggplot(plot_data, aes(allele_frequencies)) + geom_histogram()                    # same function as below
-ggplot(tibble(allele_frequencies), aes(x=allele_frequencies)) + geom_histogram() # same function as top
+  # ggplot(tibble(allele_frequencies), aes(x=allele_frequencies)) + geom_histogram() # same output result as the top, but different functional re
 
-#############################
-phenotypes$geo = one_geno
-phenotypes$one_geo = as.numeric(one_geno)
+#############################  (pp.17) 
+phenotypes$geo = one_geno                                # The phenotypes data frame contains the phenotypic variables 
+phenotypes$one_geo = as.numeric(one_geno)                # Assigning values in one_geno in the phenotypes data frame 
 
 ggplot(phenotypes, aes(x=one_geno, y=Height)) +
   geom_jitter(width = 0.2) +
   geom_smooth(method = 'lm')
-#using pipiline code to remove geo colum ad saving it in test dataframe
+
+#using pipeline code to remove geo column and saving it in test dataframe
 test <- phenotypes %>%
   select(-geo)
 
@@ -84,7 +85,7 @@ example_function = function(inputA, inputB){
   step1 + 5
 }
 example_function(3,3)
-
+###################################### (pp.20-29) 
 ###to get the p-value we did an association test
 #we did a function
 association_test = function(inputA, inputB){
