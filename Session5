@@ -91,38 +91,36 @@
         bwa mem ~/read-mapping/human-ref-GRCh38.fasta datasetT_1.fastq.gz datasetT_2.fastq.gz > X.sam ******
         /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh
         .STDOUT and .STDERR ********
-         Map.STDOUT
-         Map.STDERR 
+         Map.STDOUT********
+         Map.STDERR*********
 
-nano Example_SLURM_submission_script.sh 
-sbatch Example_SLURM_submission_script.sh 
-sacct 
 
 #6.1 Convert SAM to BAM format
- less -S
-
-samtools view -b resultrun.sam -o resultrun.bam 
+    samtools                                                 # to veiw samtools
+    samtools view                                            # to view samtools flags and functions 
+    samtools view resultrun.sam                              # to convert from SAM to BAM 
+    samtools view -b resultrun.sam -o resultrun.bam 
+    samtools view -b resultrun.sam -o resultrun.bam | less -S
 
 #7.1 Sort the BAM file
- samtools view
- samtools view -h file.bam | less -S
-samtools view resultrun.sam
-resultrun.bam
-
+ 
+    samtools view -h resultrun.bam | less -S      # Sorting the BAM file 
 
 #8.1 Index the BAM file
- samtools idxstats
- samtools
- index” command, and results in a small file with a “.bai” extension
+   
+    samtools idxstats resultrun.bam               #  index” command, and results in a small file with a “.bai” extension
 
 #9.1 Extract mapping statistics
- samtools flagstat
+
+    samtools flagstat resultrun.bam               #  index” command, and results in a small file with a “.bai” extension
 
 #10.1 Study coverage across chromosomes
- samtools coverage
- coverage
- meandepth 
- column -t 
+    samtools coverage resultrun.bam               # study the coverage 
+    samtools coverage resultrun.bam| column -t    # this alternative option provides a clearer image 
+
+    #10.2 
+        # look at the coverage column 
+        # look at the meandepth column
 
 #11.1 Determine sex chromosome karyotype
 
