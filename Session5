@@ -46,7 +46,44 @@
         ls -ltrh /gpfs/data/BIO-DSB/Session5/ref/
                 # you can check the following list to see the index list 
 
-#5.1 Align reads to the reference genome******* 
+#5.1 Align reads to the reference genome
+
+    #5.1.1. Submit a SLURM job 
+
+        cd ~                                                                  # Go to the home directory 
+        cd /gpfs/data/BIO-DSB/Session5/                                       # Go to the Session 5 directory of the gpfs data 0 BIO-DSB session 
+        nano Example_SLURM_submission_script.sh                               # Open the sample SLURM Job 
+
+    #5.1.2. Edit the existing SLURM Submission Shell & Make sure to copy and paste the exact commands written below with the #; 
+
+        #!/bin/bash -e
+        #SBATCH --qos=bio-ds                       # User group
+        #SBATCH -p bio-ds                          # Job queue (partition)
+        #SBATCH -N 1                               # number of nodes
+        #SBATCH -n 1                               # number of processes
+        #SBATCH -c 1                               # number of cores
+        #SBATCH --mem 10G                          # memory pool for all cores. Check it is 10G and not 2G as in the previous Example SLURM base input
+        #SBATCH -t 0-00:10                         # wall time (D-HH:MM)
+        #SBATCH -o Map.STDOUT                      # STDOUT
+        #SBATCH -e Map.STDERR                      # STDERR
+        #SBATCH -J example                         # job name
+        # #SBATCH --mail-type=END,FAIL             # notifications for job done & fail
+        # #SBATCH --mail-user=szz25cnu@uea.ac.uk   # send-to address
+        module load bwa/0.7.17
+        module load samtools/1.21
+        bwa mem ~/ref/human-ref-GRCh38.fasta ~/read-mapping/datasetT_1.fastq.gz ~/read-mapping/datasetT_2.fastq.gz > ~/read-mapping/resultrun.sam
+
+    #5.1.3. Exit the SLURM shell using ⌃X (control Exit) then run the sbatch     
+
+        #Ensure that you have exited the SLURM job shell template using ⌃X (control Exit) and are back to the terminal base in the read-mapping folder 
+
+        sbatch Example_SLURM_submission_script.sh          # run the sbatch command with the modified SLURM submission
+                                                           # You should receive 8 digit batch submission ID below the command 'Submitted batch job ########'
+        
+        sacct                                              # To check the progress update of your sbatch job submission, type sacct 
+                                                           # A drop-in table with JobID, Jobname, Partition, Account, AllocCPUS, State and ExitCode will appear 
+                                                           # Check that the state of the submission is COMPLETED. If still RUNNING wait and type sacct again to check on the progress
+        
 
         cd /gpfs/data/BIO-DSB/Session5/ref/
         cp human-ref-GRCh38.fasta ~/read-mapping
