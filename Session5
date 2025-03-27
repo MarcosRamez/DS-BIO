@@ -83,17 +83,6 @@
         sacct                                              # To check the progress update of your sbatch job submission, type sacct 
                                                            # A drop-in table with JobID, Jobname, Partition, Account, AllocCPUS, State and ExitCode will appear 
                                                            # Check that the state of the submission is COMPLETED. If still RUNNING wait and type sacct again to check on the progress
-        
-
-        cd /gpfs/data/BIO-DSB/Session5/ref/
-        cp human-ref-GRCh38.fasta ~/read-mapping
-        bwa mem ~/read-mapping/human-ref-GRCh38.fasta
-        bwa mem ~/read-mapping/human-ref-GRCh38.fasta datasetT_1.fastq.gz datasetT_2.fastq.gz > X.sam ******
-        /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh
-        .STDOUT and .STDERR ********
-         Map.STDOUT********
-         Map.STDERR*********
-
 
 #6.1 Convert SAM to BAM format
     samtools                                                 # to veiw samtools
