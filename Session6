@@ -37,7 +37,7 @@
                   # Column 4 (Allele 2; ex. A, T, C or G)  
 
 #############################################
-# 2.1 Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we use ggplot function 
+# 2.1 Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we plot histograms 
     # 2.1a     Histogram of the phenotypes dataset
         ggplot(phenotypes, aes(x=Height)) + geom_histogram()  # using the ggplot function, we map height (x-axis) using histogram by binning the data count (y-axis) into discrete values.  
     # 2.1b     Histogram of the Map dataset 
