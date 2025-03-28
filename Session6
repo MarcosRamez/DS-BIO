@@ -36,19 +36,19 @@
                   # Column 3 (Allele 0; ex. A, T, C or G) 
                   # Column 4 (Allele 2; ex. A, T, C or G)  
 
-########################## (11) 
+############################################# (11) 
 # 2.1 Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we use ggplot function 
-    # 2.1 a     Histogram of the phenotypes dataset
+    # 2.1a     Histogram of the phenotypes dataset
         ggplot(phenotypes, aes(x=Height)) + geom_histogram()  # using the ggplot function, we map height (x-axis) using histogram by binning the data count (y-axis) into discrete values.  
-    # 2.1 b     Histogram of the Map dataset 
+    # 2.1b     Histogram of the Map dataset 
         ggplot(map, aes(x=Position)) + geom_histogram()       # using the ggplot function, we map chromosomal positions (x-axis) and plot a histogram by binning the data count (y-axis) into discrete values.
 
-# 2.2 Converting column datasets into a vector  
-
+# 2.2 Pick a locus: Converting column datasets into a vector  
     row1 = genotypes[2,]                                  # extracting row 2 from genotypes dataset and all columns into renamed 'row 1' dataframe
     one_geno = as.numeric(row1)                           # as.numeric function converts all quantitative values along the row. Qualitative values are listed as NA
         # one_geno = as.numeric(genotypes[2,])            # alternatively this function can combine both, instead of the first renaming step 
 
+# 2.3 Determining the allele frequency 
     mean(one_geno)                                        # finding the mean of all the row 
          ?mean                                            # R Documentation syntax method to open 'arithmetic mean' definition in the 'Help' view (bottom right quarter)  
          one_geno                                         # Will display the one_geno value list in the 'Console' view nsole (bottom left quarter)                                    
