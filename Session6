@@ -1,7 +1,7 @@
 # Session 6; Exploring the Association between Genotypes and Phenotypes using R 
-# Project Overview; 
-  # Run R code and perform ggplot associations 
-  # Yield results 
+# Project Overview; ***************
+  # Run R code and perform ggplot associations ***********
+  # Yield results *************
 
 #############################################
 # 1.1 preparing our R code source and environment, we install the required packages and run the necessary libraries to use the necessary functions
@@ -33,7 +33,7 @@
                   # Column 3 (Allele 0; ex. A, T, C or G) 
                   # Column 4 (Allele 2; ex. A, T, C or G)  
 
-########################## 
+########################## (11) 
 # 2.1 Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we use ggplot function 
 
     ggplot(phenotypes, aes(x=Height)) + geom_histogram()  # using the ggplot function, we use the phenotypes dataset, we employ an aesthetic mapping of height (x-axis) and plot a histogram by binning (y-axis) data count into discrete values
