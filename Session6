@@ -10,13 +10,13 @@
           library(tidyverse)         # loading installed package using library function for further function tool loads
 
 # 1.2a GWAS_data zip file was downloaded which was unzipped and opened containing 3 files; 
-           # Chr12_Genotypes.tsv, Chr12_Map.tsv and Phenotype_Height.tsv
+          # Chr12_Genotypes.tsv, Chr12_Map.tsv and Phenotype_Height.tsv
 
 # 1.2b Renaming the downloaded datasets in R Source code to load in the R environment 
 
     genotypes<-read_tsv("~/Downloads/GWAS_data/Chr12_Genotypes.tsv")
-    map<-read_tsv("~/Downloads/GWAS_data/Chr12_Map.tsv")
     phenotypes<-read_tsv("~/Downloads/GWAS_data/Phenotype_Height.tsv") 
+    map<-read_tsv("~/Downloads/GWAS_data/Chr12_Map.tsv")
 
           # In Genotypes data set for Chromosome 12; 
                   # Columns include Sample Code Names (ex. A404) 
@@ -32,7 +32,6 @@
                   # Column 2 (Position; ex.465087) 
                   # Column 3 (Allele 0; ex. A, T, C or G) 
                   # Column 4 (Allele 2; ex. A, T, C or G)  
-
 
 ########################## 
 # 2.1 Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we use ggplot function 
