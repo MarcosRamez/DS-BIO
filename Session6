@@ -1,11 +1,9 @@
-# SESSION 6; Exploring the Association between Genotypes and Phenotypes using R 
-
-# PROJECT OVERVIEW 
-# We are looking at the associations between traits (height; short/tall) and variants (genomic)
-# Mapping population of wheat
-# The Wheat population was inbred for several generations after crossing to create
-genetically homogenous ‘lines’
-# Each homogenous line was grown in separate plots and then sequenced and measured
+### SESSION 6; Exploring the Association between Genotypes and Phenotypes using R 
+    ### PROJECT OVERVIEW 
+        # We are looking at the associations between traits (height; short/tall) and variants (genomic)
+        # Mapping population of Wheat
+        # The Wheat population was inbred for several generations after crossing to create genetically homogenous ‘lines’
+        # Each homogenous line was grown in separate plots and then sequenced and measured
 
 #############################################
 # 1.1 Preparing our R code source and environment, we install the required packages and run the necessary libraries to use the necessary functions
