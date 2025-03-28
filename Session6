@@ -36,8 +36,8 @@
 ########################## (11) 
 # 2.1 Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we use ggplot function 
 
-    ggplot(phenotypes, aes(x=Height)) + geom_histogram()  # using the ggplot function, we use the phenotypes dataset, we employ an aesthetic mapping of height (x-axis) and plot a histogram by binning (y-axis) data count into discrete values
-    ggplot(map, aes(x=Position)) + geom_histogram()       # using the ggplot function, we use the map dataset, we employ an aesthetic mapping of chromosomal positions (x-axis) and plot a histogram by binning (y-axis) data count into discrete values
+    ggplot(phenotypes, aes(x=Height)) + geom_histogram()  # using the ggplot function, we map height (x-axis) using histogram by binning the data count (y-axis) into discrete values of the phenotypes dataset. 
+    ggplot(map, aes(x=Position)) + geom_histogram()       # using the ggplot function, we map chromosomal positions (x-axis) and plot a histogram by binning the data count (y-axis) into discrete values of the map dataset. 
 
 # 2.2 Converting column datasets into a vector  
 
