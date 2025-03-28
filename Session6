@@ -18,6 +18,22 @@
     map<-read_tsv("~/Downloads/GWAS_data/Chr12_Map.tsv")
     phenotypes<-read_tsv("~/Downloads/GWAS_data/Phenotype_Height.tsv") 
 
+          # In Genotypes data set for Chromosome 12; 
+                  # Columns include Sample Code Names (ex. A404) 
+                  # Rows include allele codes (0, 2, NA) 
+                        # 0 - Homozygous for reference allele (ex. A&A); 2 reference alleles 
+                        # 1 - Heterozygous for reference allele (ex. A&C); 1 reference allele, 1 alternative allele 
+                        # 2 - Homozygous for alternative allele (ex. C&C); 2 alternative allele 
+          # In Phenotypes data set 
+                  # Column 1 (Sample Name; ex. A404) 
+                  # Column 2 (Height; ex. 60.9567...) 
+          # In Map data set for Chromosome 12 
+                  # Column 1 (Chromosome; 12) 
+                  # Column 2 (Position; ex.465087) 
+                  # Column 3 (Allele 0; ex. A, T, C or G) 
+                  # Column 4 (Allele 2; ex. A, T, C or G)  
+
+
 ########################## 
 # 2.1 Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we use ggplot function 
 
