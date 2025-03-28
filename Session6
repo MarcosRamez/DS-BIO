@@ -1,16 +1,20 @@
-# Session 6; Exploring the Association between Genotypes and Phenotypes using R 
-# Project Overview; ***************
-  # Run R code and perform ggplot associations ***********
-  # Yield results *************
+# SESSION 6; Exploring the Association between Genotypes and Phenotypes using R 
+
+# PROJECT OVERVIEW 
+# We are looking at the associations between traits (height; short/tall) and variants (genomic)
+# Mapping population of wheat
+# The Wheat population was inbred for several generations after crossing to create
+genetically homogenous ‘lines’
+# Each homogenous line was grown in separate plots and then sequenced and measured
 
 #############################################
-# 1.1 preparing our R code source and environment, we install the required packages and run the necessary libraries to use the necessary functions
+# 1.1 Preparing our R code source and environment, we install the required packages and run the necessary libraries to use the necessary functions
 
     install.packages("tidyverse")    # installing the tidyverse package 
-          library(tidyverse)         # loading installed package using library function for further function tool loads
+          library(tidyverse)         # loading installed package using library function for further functional tool loads
 
 # 1.2a GWAS_data zip file was downloaded which was unzipped and opened containing 3 files; 
-          # Chr12_Genotypes.tsv, Chr12_Map.tsv and Phenotype_Height.tsv
+          # (1) Chr12_Genotypes.tsv, (2) Chr12_Map.tsv and (3) Phenotype_Height.tsv
 
 # 1.2b Renaming the downloaded datasets in R Source code to load in the R environment 
 
@@ -24,12 +28,13 @@
                         # 0 - Homozygous for reference allele (ex. A&A); 2 reference alleles 
                         # 1 - Heterozygous for reference allele (ex. A&C); 1 reference allele, 1 alternative allele 
                         # 2 - Homozygous for alternative allele (ex. C&C); 2 alternative allele 
+                            # NOTE; We are looking at homogenous lines, thus dealing with 0 and 2 allele codes. 
           # In Phenotypes data set 
                   # Column 1 (Sample Name; ex. A404) 
                   # Column 2 (Height; ex. 60.9567...) 
           # In Map data set for Chromosome 12 
                   # Column 1 (Chromosome; 12) 
-                  # Column 2 (Position; ex.465087) 
+                  # Column 2 (Chromosomal Position; ex.465087) 
                   # Column 3 (Allele 0; ex. A, T, C or G) 
                   # Column 4 (Allele 2; ex. A, T, C or G)  
 
