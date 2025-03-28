@@ -36,7 +36,7 @@
                   # Column 3 (Allele 0; ex. A, T, C or G) 
                   # Column 4 (Allele 2; ex. A, T, C or G)  
 
-############################################# (11) 
+#############################################
 # 2.1 Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we use ggplot function 
     # 2.1a     Histogram of the phenotypes dataset
         ggplot(phenotypes, aes(x=Height)) + geom_histogram()  # using the ggplot function, we map height (x-axis) using histogram by binning the data count (y-axis) into discrete values.  
@@ -63,7 +63,7 @@
                     # There are 504 samples across row 1 with an average value of 0.16 thus more homozygous alleles for reference allele (0) than homozygous alleles for alternative allele (2). 
                     # The total sum of the row is 80 which when divided by 2 equates to 40 samples of (2) and 464 samples of (0). 
 
-#############################  (pp.17) 
+#############################  (pp.17) NOTE; STILL NEED TO DO ANNOTATIONS FOR THE REST 
 phenotypes$geo = one_geno                                # The phenotypes data frame contains the phenotypic variables 
 phenotypes$one_geo = as.numeric(one_geno)                # Assigning values in one_geno in the phenotypes data frame 
 
@@ -104,7 +104,6 @@ example_function = function(inputA, inputB){
   step1 + 5
 }
 example_function(3,3)
-###################################### (pp.20-29) 
 ###to get the p-value we did an association test
 #we did a function
 association_test = function(inputA, inputB){
