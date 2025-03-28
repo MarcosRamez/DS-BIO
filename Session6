@@ -1,9 +1,9 @@
 ### SESSION 6; Exploring the Association between Genotypes and Phenotypes using R 
     ### PROJECT OVERVIEW 
-        # We are looking at the associations between traits (height; short/tall) and variants (genomic)
-        # Mapping population of Wheat
-        # The Wheat population was inbred for several generations after crossing to create genetically homogenous ‘lines’
-        # Each homogenous line was grown in separate plots and then sequenced and measured
+        # We are looking at the associations between traits (height; short/tall) and variants (genomic).
+        # Mapping population of Wheat.
+        # The Wheat population was inbred for several generations after crossing to create genetically homogenous ‘lines’.
+        # Each homogenous line was grown in separate plots and then sequenced and measured.
 
 #############################################
 # 1.1 Preparing our R code source and environment, we install the required packages and run the necessary libraries to use the necessary functions
@@ -26,7 +26,7 @@
                         # 0 - Homozygous for reference allele (ex. A&A); 2 reference alleles 
                         # 1 - Heterozygous for reference allele (ex. A&C); 1 reference allele, 1 alternative allele 
                         # 2 - Homozygous for alternative allele (ex. C&C); 2 alternative allele 
-                            # NOTE; We are looking at homogenous lines, thus dealing with 0 and 2 allele codes. 
+                            # NOTE; we are looking at homogenous lines, thus dealing with 0 and 2 allele codes. 
           # In Phenotypes data set 
                   # Column 1 (Sample Name; ex. A404) 
                   # Column 2 (Height; ex. 60.9567...) 
@@ -44,24 +44,24 @@
         ggplot(map, aes(x=Position)) + geom_histogram()       # using the ggplot function, we map chromosomal positions (x-axis) and plot a histogram by binning the data count (y-axis) into discrete values.
 
 # 2.2 Pick a locus: Converting column datasets into a vector  
-    row1 = genotypes[2,]                                  # extracting row 2 from genotypes dataset and all columns into renamed 'row 1' dataframe
-    one_geno = as.numeric(row1)                           # as.numeric function converts all quantitative values along the row. Qualitative values are listed as NA
-        # one_geno = as.numeric(genotypes[2,])            # alternatively this function can combine both, instead of the first renaming step 
-
+    one_geno = as.numeric(genotypes[2,])                  # as.numeric function converts all quantitative values along the row. Qualitative values are listed as NA.
+                                                          # extracting row 2 from genotypes dataset and all columns of the genotypes dataframe
 # 2.3 Determining the allele frequency 
     mean(one_geno)                                        # finding the mean of all the row 
          ?mean                                            # R Documentation syntax method to open 'arithmetic mean' definition in the 'Help' view (bottom right quarter)  
-         one_geno                                         # Will display the one_geno value list in the 'Console' view nsole (bottom left quarter)                                    
+         one_geno                                         # will display the one_geno value list in the 'Console' view Console (bottom left quarter) of R                                   
     mean(one_geno, na.rm=TRUE)/2                          # computing the mean of one_geno and dividing the results by 2 to scale down the results. na.rm=TRUE ignores NA qualitative values.  
-        # mean(as.numeric(one_geno), na.rm=TRUE)/2        # **********nesting example; alternative example to the previous line 
-    apply(genotypes, 1, mean, na.rm=TRUE)/2               # **********using column 1 of the genotypes dataset, 
 
-############################## (pp. 16) 
-allele_frequencies = apply(genotypes, 1, mean, na.rm=TRUE)/2    # quanitifiying the allele frequency; selecting genotypes row, removing all NA values
-    plot_data = tibble(allele_frequencies)                      # plotting the result using tibble function data frame 
+# 2.4 Allele frequency across all loci 
+    apply(genotypes, 1, mean, na.rm=TRUE)/2               # vector representing the normalized mean genotype for each sample population
 
-ggplot(plot_data, aes(allele_frequencies)) + geom_histogram()                    # same function as below
-  # ggplot(tibble(allele_frequencies), aes(x=allele_frequencies)) + geom_histogram() # same output result as the top, but different functional re
+# 2.5 Plot allele frequency across all loci
+    allele_frequencies = apply(genotypes, 1, mean, na.rm=TRUE)/2    # quantifiying the allele frequency; selecting all genotypes allele codes in row 1 and removing all NA values.
+        plot_data = tibble(allele_frequencies)                      # plotting the result using tibble function data frame 
+
+    ggplot(plot_data, aes(allele_frequencies)) + geom_histogram()   # plotting a histogram with allele frequencies in x axis and allele count in y axis
+                    # There are 504 samples across row 1 with an average value of 0.16 thus more homozygous alleles for reference allele (0) than homozygous alleles for alternative allele (2). 
+                    # The total sum of the row is 80 which when divided by 2 equates to 40 samples of (2) and 464 samples of (0). 
 
 #############################  (pp.17) 
 phenotypes$geo = one_geno                                # The phenotypes data frame contains the phenotypic variables 
