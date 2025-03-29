@@ -1,38 +1,43 @@
 # READ MAPPING EXERCISE SESSION 5 
+# GIT
         # BIO-7051B-24-SEM2-B 2024/5: DATA SCIENCE AND BIOINFORMATICS  
                      # Using Illumina whole-genome sequencing dataset
 
-# 1.1 Start an interactive Slurm session and load software
-
-    interactive-bio-ds                                     # interactive job run commands without necessarily having to submit Slurm jobs for every command
-        module load bwa/0.7.17                                 # loading bwa 
+# 1.1 Start an interactive Slurm session and load the softwares (BWA & SAMTOOLS) 
+    interactive-bio-ds                                     # interactive bio-ds session load so that SLURM jobs not required for every command 
+        module load bwa/0.7.17                                 # loading bwa (Burrows-Wheeler Aligner maps low-divergent sequences against a reference genome) 
             bwa                                                    # lists bwa command options/functions
-        module load samtools/1.21                              # loading samtools 
+        module load samtools/1.21                              # loading samtools (Samtools is a high-throughput sequencing data tool) 
             samtools                                               # lists samtools command options/functions
 
 # 2.1 Copy your chosen dataset
-
-      cd /gpfs/data/BIO-DSB/Session5/datasets/                                             # access the directory 
-                # Choose the datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz ' 
-                # move them using cp from ~/gpfs/../datasets/ to ~/read-mapping 
+      # 2.1.1 Go to home directory and create a 'read-mapping' folder 
       cd ~                                                                                 # go to the home directory 
       pwd                                                                                  # check which folder you are in
-          mkdir read-mapping                                                                   # creates a new directory called read-mapping
-          cd read-mapping/                                                                     # change directory to read-mapping 
+          mkdir read-mapping                                                                   # create a new directory called read-mapping for this exercise 
 
-    # cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .                                 # copy both files
-          cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_1.fastq.gz read-mapping/            # copy T1 files
-          cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_2.fastq.gz read-mapping/            # copy T2 files
-      cp /gpfs/data/BIO-DSB/Session5/ref read-mapping/      					           # copy ref folder 
-      cp /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh read-mapping/      # copy Ex. SLURM shell file 
-  
-      ls -ltrh                                                                             # check the files are now here
-          ls                                                                                   # alternatively ls for simplicity
+      # 2.1.2 Go to BIO-DSB Session 5 directory and copy the required data files and folders
+        # copy them from the 'read-mapping' folder on the gpfs (general parallel file system) to the home user (base)
+        cd /gpfs/data/BIO-DSB/Session5/datasets/                                             # access the BIO-DSB Session 5 Dataset directory 
+                # Choose the datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz ' 
+                # move them using cp from ~/gpfs/../datasets/ to ~/read-mapping 
+                # cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .                                 # copy the file and repeat process for both data files
+                          cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_1.fastq.gz read-mapping/            # copy T1 FASTA file
+                          cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_2.fastq.gz read-mapping/            # copy T2 FASTA file
+        cd ../                                                                                # exit the datasets folder to go back to Session5 folder 
+                # alternatively you can do ' cd ~ ' then 'cd /gpfs/data/BIO-DSB/Session5/' 
+                          cp /gpfs/data/BIO-DSB/Session5/ref read-mapping/      		               # copy the ref folder 
+                          cp /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh read-mapping/      # copy Ex. SLURM shell file 
 
-    # can also use filezilla 
-
+        # can also use filezilla to move the files and folders, if any issues persist 
+ 
+        # 2.1.3 Go to home base to check if the files and folders have been moved 
+        cd ~                                                                                 # go back to the home directory 
+                cd read-mapping/                                                                     # change directory to read-mapping folder 
+        ls -ltrh                                                                             # check the files are now here using -lrth flag 
+                ls                                                                                   # alternatively ls for simplicity
+          
 # 3.1 Study your input files
-
         zless datasetT_1.fastq.gz                                # less for gzipped files. “q” to exit        
         zcat datasetT_1.fastq.gz | head                          # cat for gzipped files, piped into head
         zcat datasetT_1.fastq.gz | wc -l                         # pipe into wc to count lines                                                                                        
@@ -113,6 +118,18 @@
         # look at the meandepth column
 
 # 11.1 Determine sex chromosome karyotype
+
+Question 1) How much of the sequenced DNA is human? There’s some amount of bacterial
+contamination in every dataset, meaning some of the reads are not of human origin, rather they are of
+bacterial origin. Find out what fraction of the reads in your dataset are human.
+Question 2) Which chromosome is duplicated? Every dataset has a simulated duplication for one of
+the chromosomes. So instead of there being two copies of that chromosome, there are three copies.
+This condition is known as a trisomy. For example, trisomy of chromosome 21 causes Downs syndrome,
+and it’s also common for cancer tumours to acquire extra copies of chromosomes. Find out what
+chromosome is duplicated in your dataset.
+Question 3) What is the sex chromosome karyotype? Biological females have two X chromosomes (XX
+karyotype), while biological males have one X and one Y chromosome (XY karyotype). Find out the sex
+chromosome karyotype in your dataset
 
 # 12.1 Estimate mitochondrial copy number
 
