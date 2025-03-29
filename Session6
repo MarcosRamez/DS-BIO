@@ -6,6 +6,7 @@
         # Each homogenous line was grown in separate plots and then sequenced and measured.
 
 #############################################
+# PACKAGES 
 # 1.1 Preparing our R code source and environment, we install the required packages and run the necessary libraries to use the necessary functions
 
     install.packages("tidyverse")    # installing the tidyverse package 
@@ -14,6 +15,8 @@
 # 1.2a GWAS_data zip file was downloaded which was unzipped and opened containing 3 files; 
           # (1) Chr12_Genotypes.tsv, (2) Chr12_Map.tsv and (3) Phenotype_Height.tsv
 
+#############################################
+# DATA EXPLORATION 
 # 1.2b Renaming the downloaded datasets in R Source code to load in the R environment 
 
     genotypes<-read_tsv("~/Downloads/GWAS_data/Chr12_Genotypes.tsv")
@@ -36,7 +39,6 @@
                   # Column 3 (Allele 0; ex. A, T, C or G) 
                   # Column 4 (Allele 2; ex. A, T, C or G)  
 
-#############################################
 # 2.1 Using the ggplot2 sub-package from tidyverse (pplots and visualizations), we plot histograms 
     # 2.1a     Histogram of the phenotypes dataset
         ggplot(phenotypes, aes(x=Height)) + geom_histogram()  # using the ggplot function, we map height (x-axis) using histogram by binning the data count (y-axis) into discrete values.  
@@ -64,6 +66,8 @@
                     # The total sum of the row is 80 which when divided by 2 equates to 40 samples of (2) and 464 samples of (0). 
 
 #############################  (pp.17) NOTE; STILL NEED TO DO ANNOTATIONS FOR THE REST 
+# GENOTYPE-PHENOTYPE ASSOCIATION
+# 3.1 Plot the association between one genotype and the phenotype 
 phenotypes$geo = one_geno                                # The phenotypes data frame contains the phenotypic variables 
 phenotypes$one_geo = as.numeric(one_geno)                # Assigning values in one_geno in the phenotypes data frame 
 
@@ -91,6 +95,7 @@ str(phenotypes)
 
 phenotypes$Sample_Name
 
+# 4.1 Statistical association between one genotype and the phenotype
 corTestResult = cor.test(phenotypes$Height, phenotypes$one_geo)
 corTestResult$p.value
 
@@ -98,6 +103,10 @@ one_geno = as.numeric (genotypes[2,])
 test_result = cor.test(phenotypes$one_geo, phenotypes$Height)
 test_results$p.value #we want to repeat it a hundred times
 
+
+################################### 
+#GWAS across all genotypes
+#Repeat association test across all genotypes (pp.18)
 ### we did a sample function
 example_function = function(inputA, inputB){
   step1 = inputA^2 + inputB
