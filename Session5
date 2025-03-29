@@ -51,12 +51,12 @@
         bwa index /gpfs/data/BIO-DSB/Session5/ref/human-ref-GRCh38.fasta      # the FASTA file will indexed using bwa index for human-ref-GRCh38 reference genome
                 # human-ref-GRCh38'.fai' '.amb' '.pac' '.ann' '.sa' '.bwt', are the 6 following indexes which will be generated 
         cd read-mapping/ref/                                                  # the FASTA file was already indexed to save time and space in the 'ref' folder
-        ls -lrth                                                              # this will list all of the indexes including the original human '.fasta' file 
+        ls -lrth                                                              # this will list all of the indexes including the original human '.fasta' file so 7 files in total
 
 # 5.1 Align reads to the reference genome
     # 5.1.1. Submit a SLURM job 
         cd ~                                                                  # go to the home directory 
-        cd /gpfs/data/BIO-DSB/Session5/                                       # go to the Session 5 directory of the gpfs data 0 BIO-DSB session 
+        cd read-mapping/                                                      # go to the 'read-mapping' folder  
         nano Example_SLURM_submission_script.sh                               # open the sample SLURM Job 
 
     # 5.1.2. Edit the existing SLURM Submission Shell & Make sure to copy and paste the exact commands written below with the #; 
