@@ -3,65 +3,63 @@
         # BIO-7051B-24-SEM2-B 2024/5: DATA SCIENCE AND BIOINFORMATICS  
                      # Using Illumina whole-genome sequencing dataset
 
-# 1.1 Start an interactive Slurm session and load the softwares (BWA & SAMTOOLS) 
+# 1.1 Start an interactive Slurm session and Load the Softwares (BWA & SAMTOOLS) 
     interactive-bio-ds                                     # interactive bio-ds session load so that SLURM jobs not required for every command 
         module load bwa/0.7.17                                 # loading bwa (Burrows-Wheeler Aligner maps low-divergent sequences against a reference genome) 
             bwa                                                    # lists bwa command options/functions
         module load samtools/1.21                              # loading samtools (Samtools is a high-throughput sequencing data tool) 
             samtools                                               # lists samtools command options/functions
 
-# 2.1 Copy your chosen dataset
+# 2.1 Copy your Chosen Dataset
       # 2.1.1 Go to home directory and create a 'read-mapping' folder 
-      cd ~                                                                                 # go to the home directory 
-      pwd                                                                                  # check which folder you are in
-          mkdir read-mapping                                                                   # create a new directory called read-mapping for this exercise 
+              cd ~                                                                                 # go to the home directory 
+              pwd                                                                                  # check which folder you are in
+                  mkdir read-mapping                                                                   # create a new directory folder called 'read-mapping' for this exercise 
 
-      # 2.1.2 Go to BIO-DSB Session 5 directory and copy the required data files and folders
+      # 2.1.2 Go to BIO-DSB Session 5 directory and copy the data files and folders
         # copy them from the 'read-mapping' folder on the gpfs (general parallel file system) to the home user (base)
-        cd /gpfs/data/BIO-DSB/Session5/datasets/                                             # access the BIO-DSB Session 5 Dataset directory 
+                cd /gpfs/data/BIO-DSB/Session5/datasets/                                             # access the BIO-DSB Session 5 Dataset directory 
                 # Choose the datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz ' 
                 # move them using cp from ~/gpfs/../datasets/ to ~/read-mapping 
-                # cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .                                 # copy the file and repeat process for both data files
+                # cp /gpfs/data/BIO-DSB/Session5/datasets/datasetX_* .                               # copy the file and repeat process for both data files
                           cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_1.fastq.gz read-mapping/            # copy T1 FASTA file
                           cp /gpfs/data/BIO-DSB/Session5/datasets/datasetT_2.fastq.gz read-mapping/            # copy T2 FASTA file
-        cd ../                                                                                # exit the datasets folder to go back to Session5 folder 
+                cd ../                                                                               # exit the datasets folder to go back to Session5 folder 
                 # alternatively you can do ' cd ~ ' then 'cd /gpfs/data/BIO-DSB/Session5/' 
                           cp /gpfs/data/BIO-DSB/Session5/ref read-mapping/      		               # copy the ref folder 
                           cp /gpfs/data/BIO-DSB/Session5/Example_SLURM_submission_script.sh read-mapping/      # copy Ex. SLURM shell file 
 
-        # can also use filezilla to move the files and folders, if any issues persist 
+                # can also use filezilla to move the files and folders, if any issues persist 
  
-        # 2.1.3 Go to home base to check if the files and folders have been moved 
-        cd ~                                                                                 # go back to the home directory 
-                cd read-mapping/                                                                     # change directory to read-mapping folder 
-        ls -ltrh                                                                             # check the files are now here using -lrth flag 
-                ls                                                                                   # alternatively ls for simplicity
+        # 2.1.3 Go to home base to check if the files and folders have been copied 
+                cd ~                                                                                 # go back to the home directory 
+                        cd read-mapping/                                                                     # change directory to read-mapping folder 
+                ls -ltrh                                                                             # check the files are now here using -lrth flag 
+                        ls                                                                                   # alternatively ls for simplicity
           
-# 3.1 Study your input files
-        zless datasetT_1.fastq.gz                                # less for gzipped files. “q” to exit        
+# 3.1 Study your Input files
+        zless datasetT_1.fastq.gz                                # less for gzipped files. Press “q” to exit        
         zcat datasetT_1.fastq.gz | head                          # cat for gzipped files, piped into head
-        zcat datasetT_1.fastq.gz | wc -l                         # pipe into wc to count lines                                                                                        
-        head human-ref-GRh38.fasta 		                         # can use head or less for non .gz files
-                # We can look at both datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz '
-                # Datasets have to be the same pair (S1-S2 or R1-R2, as different datasets have different wc -l) 
+        zcat datasetT_1.fastq.gz | wc -l                         # pipe into wc to count lines     
+                # repeat the same process but change the file from datasetT_1.fast1.gz to datasetT_2.fast1.gz
+        head human-ref-GRh38.fasta 		                 # can use head or less for non .gz files 
+                # We can look at both datasets; ' datasetT_1.fastq.gz ' & ' datasetT_2.fastq.gz '.
+                # Both datasets T_1 AND T_2 should have a sequence read of 507584. It is crucial for alignment. 
+                # Datasets have to be the same pair (S1-S2 or R1-R2), as different datasets have different wc -l. 
 
-# 4.1  Study the reference genome
-
-        bwa index /gpfs/data/BIO-DSB/Session5/ref/human-ref-GRCh38.fasta      # The FASTA file has been indexed for human-ref-GRCh38 reference genome
-                # human-ref-GRCh38.fasta .fai .amb .pac .ann .sa .bwt are the following indexes 
-        ls -ltrh /gpfs/data/BIO-DSB/Session5/ref/
-                # you can check the following list to see the index list 
+# 4.1 Study the reference genome
+        bwa index /gpfs/data/BIO-DSB/Session5/ref/human-ref-GRCh38.fasta      # the FASTA file will indexed using bwa index for human-ref-GRCh38 reference genome
+                # human-ref-GRCh38'.fai' '.amb' '.pac' '.ann' '.sa' '.bwt', are the 6 following indexes which will be generated 
+        cd read-mapping/ref/                                                  # the FASTA file was already indexed to save time and space in the 'ref' folder
+        ls -lrth                                                              # this will list all of the indexes including the original human '.fasta' file 
 
 # 5.1 Align reads to the reference genome
-
     # 5.1.1. Submit a SLURM job 
-
-        cd ~                                                                  # Go to the home directory 
-        cd /gpfs/data/BIO-DSB/Session5/                                       # Go to the Session 5 directory of the gpfs data 0 BIO-DSB session 
-        nano Example_SLURM_submission_script.sh                               # Open the sample SLURM Job 
+        cd ~                                                                  # go to the home directory 
+        cd /gpfs/data/BIO-DSB/Session5/                                       # go to the Session 5 directory of the gpfs data 0 BIO-DSB session 
+        nano Example_SLURM_submission_script.sh                               # open the sample SLURM Job 
 
     # 5.1.2. Edit the existing SLURM Submission Shell & Make sure to copy and paste the exact commands written below with the #; 
-
         #!/bin/bash -e
         #SBATCH --qos=bio-ds                       # User group
         #SBATCH -p bio-ds                          # Job queue (partition)
@@ -77,7 +75,7 @@
         # #SBATCH --mail-user=szz25cnu@uea.ac.uk   # send-to address
         module load bwa/0.7.17
         module load samtools/1.21
-        bwa mem ~/ref/human-ref-GRCh38.fasta ~/read-mapping/datasetT_1.fastq.gz ~/read-mapping/datasetT_2.fastq.gz > ~/read-mapping/resultrun.sam
+        bwa mem ~/ref/human-ref-GRCh38.fasta ~/read-mapping/datasetT_1.fastq.gz ~/read-mapping/datasetT_2.fastq.gz > ~/read-mapping/resultrun.sam  # mapping the reads to the reference genome
 
     # 5.1.3. Exit the SLURM shell using ⌃X (control Exit) then run the sbatch     
 
