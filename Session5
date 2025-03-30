@@ -102,11 +102,11 @@
         samtools idxstats Resultrun.bam               #  BAM index stats command, and results in a small file with a “.bai” extension
 
 # 8.1 Extract mapping statistics
-    samtools flagstat Resultrun.bam               #  index” command, and results in a small file with a “.bai” extension
+        samtools flagstat Resultrun.bam               #  index” command, and results in a small file with a “.bai” extension
 
 # 9.1 Study coverage across chromosomes
-    samtools coverage Resultrun.bam               # study the coverage 
-    samtools coverage Resultrun.bam| column -t    # this alternative option provides a clearer image 
+        samtools coverage Resultrun.bam               # study the coverage 
+        samtools coverage Resultrun.bam| column -t    # this alternative option provides a clearer image 
 
     # 9.2 
         # look at the coverage column 
