@@ -97,21 +97,21 @@
         wc -l Resultrun.bam                                                 # word count is 88,726. The BAM file is 165,536 words smaller 
 
 # 7.1 Sort then Index the BAM file
-        samtools sort Resultrun.bam -o Resultrun_sorted.bam
-        samtools index Resultrun_sorted.bam
-        samtools idxstats Resultrun.bam               #  BAM index stats command, and results in a small file with a “.bai” extension
-
+        samtools sort Resultrun.bam -o Resultrun_sorted.bam                 # sorts the BAM file into a new output sorted file by reference and position
+        samtools index Resultrun_sorted.bam                                 # creates an index file to access specific regions of BAM file for query and analysis
+                                                                                        # BAM index stats command, and results in a small file with a “.bai” extension
+        samtools idxstats Resultrun.bam                                     # provides summary of the alignment statistics with <reference_name> <sequence_length> <mapped_reads> <unmapped_reads>
+                                                                                        
 # 8.1 Extract mapping statistics
-        samtools flagstat Resultrun.bam               #  index” command, and results in a small file with a “.bai” extension
+        samtools flagstat Resultrun.bam                                     #  generates basic stats sumamry about alignment in BAM file about number of reads 
+                                                                                 # analysis includes primary mapped, unmapped, properly paired, primary duplicate reads, or mate mapping etc...
 
 # 9.1 Study coverage across chromosomes
-        samtools coverage Resultrun.bam               # study the coverage 
-        samtools coverage Resultrun.bam| column -t    # this alternative option provides a clearer image 
-
-    # 9.2 
-        # look at the coverage column 
-        # look at the meandepth column
-
+        samtools coverage Resultrun.bam                                     # study the BAM file coverage by calculating reads of each base that covers ref genome 
+                                                                                 # evaluates depth coverage in sequencing quality 
+        samtools coverage Resultrun.bam | column -t                         # this alternative option provides with pipe column -t gives a clearer image formating output
+                                                                                 # output is a well-aligned table with head titles and missing digits
+                                                 
 # 10.1 Determine sex chromosome karyotype
 Question 1) How much of the sequenced DNA is human? There’s some amount of bacterial
 contamination in every dataset, meaning some of the reads are not of human origin, rather they are of
