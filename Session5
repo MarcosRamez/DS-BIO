@@ -86,35 +86,33 @@
                                                            # A drop-in table with JobID, Jobname, Partition, Account, AllocCPUS, State and ExitCode will appear 
                                                            # Check that the state of the submission is COMPLETED. If still RUNNING wait and type sacct again to check on the progress
 
-# 6.1 Convert SAM to BAM format
-    samtools                                                 # to veiw samtools
-    samtools view                                            # to view samtools flags and functions 
-    samtools view resultrun.sam                              # to convert from SAM to BAM 
-    samtools view -b resultrun.sam -o resultrun.bam 
-    samtools view -b resultrun.sam -o resultrun.bam | less -S
+# 6.1 Convert SAM to BAM format & Sort the BAM file
+        samtools                                                            # to veiw samtools commands 
+        samtools view                                                       # to view samtools flags options 
+        samtools view -b Resultrun.sam -o Resultrun.bam                     # to convert from SAM file to BAM file  
+                                                                                # -b output in BAM format and -o specifies output name
+        samtools view -b Resultrun.sam -o Resultrun.bam | less -S           # less -S pipe to truncate long lines and prevent line wrapping
 
-# 7.1 Sort the BAM file
- 
-    samtools view -h resultrun.bam | less -S      # Sorting the BAM file 
+        wc -l Resultrun.sam                                                 # word count is 254,262.
+        wc -l Resultrun.bam                                                 # word count is 88,726. The BAM file is 165,536 words smaller 
 
-# 8.1 Index the BAM file
-   
-    samtools idxstats resultrun.bam               #  index” command, and results in a small file with a “.bai” extension
+# 7.1 Sort then Index the BAM file
+        samtools sort Resultrun.bam -o Resultrun_sorted.bam
+        samtools index Resultrun_sorted.bam
+        samtools idxstats Resultrun.bam               #  BAM index stats command, and results in a small file with a “.bai” extension
 
-# 9.1 Extract mapping statistics
+# 8.1 Extract mapping statistics
+    samtools flagstat Resultrun.bam               #  index” command, and results in a small file with a “.bai” extension
 
-    samtools flagstat resultrun.bam               #  index” command, and results in a small file with a “.bai” extension
+# 9.1 Study coverage across chromosomes
+    samtools coverage Resultrun.bam               # study the coverage 
+    samtools coverage Resultrun.bam| column -t    # this alternative option provides a clearer image 
 
-# 10.1 Study coverage across chromosomes
-    samtools coverage resultrun.bam               # study the coverage 
-    samtools coverage resultrun.bam| column -t    # this alternative option provides a clearer image 
-
-    # 10.2 
+    # 9.2 
         # look at the coverage column 
         # look at the meandepth column
 
-# 11.1 Determine sex chromosome karyotype
-
+# 10.1 Determine sex chromosome karyotype
 Question 1) How much of the sequenced DNA is human? There’s some amount of bacterial
 contamination in every dataset, meaning some of the reads are not of human origin, rather they are of
 bacterial origin. Find out what fraction of the reads in your dataset are human.
@@ -127,5 +125,5 @@ Question 3) What is the sex chromosome karyotype? Biological females have two X 
 karyotype), while biological males have one X and one Y chromosome (XY karyotype). Find out the sex
 chromosome karyotype in your dataset
 
-# 12.1 Estimate mitochondrial copy number
+# 11.1 Estimate mitochondrial copy number
 
