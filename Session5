@@ -1,5 +1,5 @@
 # READ MAPPING EXERCISE SESSION 5 
-# GIT
+# GIT HUB; [Session5 - GitHub Repository](https://github.com/MarcosRamez/DS-BIO/blob/main/Session5)
         # BIO-7051B-24-SEM2-B 2024/5: DATA SCIENCE AND BIOINFORMATICS  
                      # Using Illumina whole-genome sequencing dataset
 
@@ -112,18 +112,32 @@
         samtools coverage Resultrun.bam | column -t                         # this alternative option provides with pipe column -t gives a clearer image formating output
                                                                                  # output is a well-aligned table with head titles and missing digits
                                                  
-# 10.1 Determine sex chromosome karyotype
-Question 1) How much of the sequenced DNA is human? There’s some amount of bacterial
-contamination in every dataset, meaning some of the reads are not of human origin, rather they are of
-bacterial origin. Find out what fraction of the reads in your dataset are human.
-Question 2) Which chromosome is duplicated? Every dataset has a simulated duplication for one of
-the chromosomes. So instead of there being two copies of that chromosome, there are three copies.
-This condition is known as a trisomy. For example, trisomy of chromosome 21 causes Downs syndrome,
-and it’s also common for cancer tumours to acquire extra copies of chromosomes. Find out what
-chromosome is duplicated in your dataset.
-Question 3) What is the sex chromosome karyotype? Biological females have two X chromosomes (XX
-karyotype), while biological males have one X and one Y chromosome (XY karyotype). Find out the sex
-chromosome karyotype in your dataset
+# 10.1 Determine sex chromosome karyotype & Estimate mitochondrial copy number
+# Question 1) How much of the sequenced DNA is human? 
+# There’s some amount of bacterial contamination in every dataset, meaning some of the reads are not of human origin, rather they are of
+                        # bacterial origin. Find out what fraction of the reads in your dataset are human.
+                # ANSWER to Q1; From the indxstat results, all the listed human chromosomes chr1 to chr22, chrX, chrY and chrM are human. 
+                # ANSWER cont.; From the flagstat results, 211342 reads are + 0 mapped + (83.13% : N/A) to reference genome. 
 
-# 11.1 Estimate mitochondrial copy number
+# Question 2) Which chromosome is duplicated? 
+# Every dataset has a simulated duplication for one of the chromosomes. So instead of there being two copies of that chromosome, there are three copies.
+# This condition is known as a trisomy. 
+# For example, trisomy of chromosome 21 causes Downs syndrome, and it’s also common for cancer tumours to acquire extra copies of chromosomes. Find out what
+# chromosome is duplicated in your dataset.
+                # ANSWER to Q2; Each cell contains 23 pairs of chromosomes (46). 
+                # ANSWER cont.; From the indxstat results there are 24 pairs. The likely duplicated chromosome is Chr12 which is found in trisomy. 
+
+# Question 3) What is the sex chromosome karyotype? Biological females have two X chromosomes (XX
+# karyotype), while biological males have one X and one Y chromosome (XY karyotype). Find out the sex
+# chromosome karyotype in your dataset
+                # ANSWER to Q3; From the indxstat results, there is a ChrY which alludes to a Male Karotype (XY) 
+
+# Question 4)Look at the coverage of the mitochondrial DNA (chrM) relative to nuclear DNA. Why is it much higher?
+# Can you estimate the approximate number of mitochondria per cell based on the coverage values?
+                # ANSWER to Q4; From samtools coverage, Mitochondrial DNA (chrM): Coverage = 557 reads and chr1 (Nuclear DNA): Coverage = 18,380 reads.
+                # ANSWER cont.; The average mitochon. genome is 16,569 bp and the average nuclear genome is 3,000,000,000 bp which is 5.52 x 10^-6 of the total bp reads. 
+                # ANSWER cont.; The ratio of ChrM to Chr1 is 0.0303 (557/18,380) 
+                # ANSWER cont.; MUTLIPLYING the ratio to the genome size  0.0303 TO 1/5.52 x 10^-6 gives us 5,500 mitochondria per cell. 
+
+
 
