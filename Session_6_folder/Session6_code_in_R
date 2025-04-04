@@ -15,6 +15,8 @@
 
 # 1.2a GWAS_data zip file was downloaded which was unzipped and opened containing 3 files; 
           # (1) Chr12_Genotypes.tsv, (2) Chr12_Map.tsv and (3) Phenotype_Height.tsv
+********
+    *************Alternatively can be found on Github.************** 
 
 # DATA EXPLORATION 
 # 1.2b Renaming the downloaded datasets in R Source code to load in the R environment 
@@ -68,18 +70,18 @@
 ##################################################################################  (pp.17) NOTE; STILL NEED TO DO BETTER ANNOTATIONS FOR THE REST OF THE WORK 
 # GENOTYPE-PHENOTYPE ASSOCIATION
 # 3.1 Plot the association between one genotype and the phenotype 
-phenotypes$geo = one_geno                                # The phenotypes data frame contains the phenotypic variables 
-phenotypes$one_geo = as.numeric(one_geno)                # Assigning values in one_geno in the phenotypes data frame 
+phenotypes$geno = one_geno                               # The phenotypes data frame contains the phenotypic variables which are accessed using the $
+phenotypes$one_geno = as.numeric(one_geno)               # Assigning values in one_geno in the phenotypes data frame 
 
-ggplot(phenotypes, aes(x=one_geno, y=Height)) +         # Create a scatter plot using `ggplot`, with `one_geno` on the x-axis and `Height` on the y-axis from the `phenotypes` data.
+ggplot(phenotypes, aes(x=one_geno, y=Height)) +         # Create a scatter plot using 'ggplot', with `one_geno` on the x-axis and `Height` on the y-axis from the `phenotypes` data.
   geom_jitter(width = 0.2) +                                # Add jittered points to the plot with a small horizontal offset (width = 0.2) to reduce overplotting.
   geom_smooth(method = 'lm')                                # Add a linear regression line (`lm`) to show the trend between the genotype (`one_geno`) and the phenotype (`Height`).
 
 # using the dplyr package 
 test <- phenotypes %>%                                  # Use the pipe operator (`%>%`) to take the `phenotypes` dataframe and select all columns except for the `geo` column, save result to 'test'.                                                        
-  select(-geo)                                          # select columns from the dataframe excluding geo column 
+  select(-geno)                                          # select columns from the dataframe excluding geo column 
 phenotypes <- phenotypes %>%                            # Use the pipe operator (`%>%`) from the `dplyr` package to modify the `phenotypes` dataframe by removing the `geo` column, save result to 'phenotype'.                                                   
-  select(-geo)                                          # select columns from the dataframe excluding geo column 
+  select(-geno)                                          # select columns from the dataframe excluding geo column 
 
 rm(test)                                                # Remove the `test` object from the environment, then use the `%>%` pipe operator to remove the `geo` column from `phenotypes`, 
                                                             # and pass the modified dataframe to `ggplot` to create a scatter plot of `one_geno` vs. `Height` with jittered points and a linear regression line.
@@ -95,11 +97,11 @@ phenotypes$Sample_Name                                  # Extract and display th
 
 #############################################
 # 4.1 Statistical association between one genotype and the phenotype
-corTestResult = cor.test(phenotypes$Height, phenotypes$one_geo)    # Perform a correlation test between the `Height` phenotype and the `one_geo` genotype, storing the result in `corTestResult`.
+corTestResult = cor.test(phenotypes$Height, phenotypes$one_geno)    # Perform a correlation test between the `Height` phenotype and the `one_geo` genotype, storing the result in `corTestResult`.
 corTestResult$p.value                                              # Extract and display the p-value from the correlation test result, indicating the strength of the association between `Height` and `one_geo`.
 
 one_geno = as.numeric (genotypes[2,])                              # Convert the second row of the `genotypes` dataframe into a numeric vector and store it in `one_geno`.
-test_result = cor.test(phenotypes$one_geo, phenotypes$Height)      # Perform a correlation test between the `one_geo` genotype (from `phenotypes`) and the `Height` phenotype, storing the result in `test_result`.
+test_result = cor.test(phenotypes$one_geno, phenotypes$Height)      # Perform a correlation test between the `one_geo` genotype (from `phenotypes`) and the `Height` phenotype, storing the result in `test_result`.
 test_results$p.value #we want to repeat it a hundred times         # Extract and display the p-value from the correlation test result (`test_result`), indicating the strength of the association between `one_geo` and `Height`.
 
 #############################################
