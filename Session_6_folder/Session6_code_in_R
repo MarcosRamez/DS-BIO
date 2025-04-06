@@ -64,28 +64,29 @@
                     # There are 504 samples across row 1 with an average value of 0.16 thus more homozygous alleles for reference allele (0) than homozygous alleles for alternative allele (2). 
                     # The total sum of the row is 80 which when divided by 2 equates to 40 samples of (2) and 464 samples of (0). 
 
-##################################################################################  (pp.17) NOTE; STILL NEED TO DO BETTER ANNOTATIONS FOR THE REST OF THE WORK 
+############################################# 
 # GENOTYPE-PHENOTYPE ASSOCIATION
 # 3.1 Plot the association between one genotype and the phenotype 
-phenotypes$one_geno = as.numeric(one_geno)              # Converting 'one_geno' into numeric form and assigning it to the 'one_geno' column within the 'phenotypes' data frame which is accessed using the $. 
-                                                             # 'Height' column already exists in the phenotypes data frame set so no need to do this.
-ggplot(phenotypes, aes(x=one_geno, y=Height)) +         # Creates a scatter plot using 'ggplot', with 'one_geno' on the x-axis and 'Height' on the y-axis from the 'phenotypes' dataset using aesthetic mapping.
+phenotypes$one_geno = as.numeric(one_geno)              # Converting 'one_geno' into numeric form and assigning it to the 'one_geno' column within the 'phenotypes' data frame which is added using the $. If you open 'phenotypes' data you will see the new column.
+                                                             # 'Height' column already exists in the phenotypes data frame set so no need to do this for height. 
+ggplot(phenotypes, aes(x=one_geno, y=Height)) +         # Using aesthetic mapping we create a scatter plot using 'ggplot', with 'one_geno' on the x-axis and 'Height' on the y-axis from the 'phenotypes' dataset. 
    geom_jitter(width=0.2) +                                # Adds jittered points to the plot with a horizontal offset (width = 0.2) to reduce overplotting of points.
    geom_smooth(method='lm')                                # Adds a linear regression line ('lm') to show the trend between the genotype ('one_geno') and the phenotype ('Height').
 
-#############################################
+############################################# 
 # 4.1 Statistical association between one genotype and the phenotype
-corTestResult = cor.test(phenotypes$Height, phenotypes$one_geno)    # Performs a correlation test between the 'Height' and 'one_geno' columns in the phenotypes data frame. Results stored in 'corTestResult'.
+corTestResult = cor.test(phenotypes$Height, phenotypes$one_geno)    # Performs a correlation test between the 'Height' and 'one_geno' columns in the phenotypes data frame. Results stored in 'corTestResult'. Data set found under 'Data' in environment (top right quarter) on R.
 corTestResult$p.value                                               # Assessing the p-value from the correlation test result run above.
-
-#############################################
-#5.1 Genome-Wide Association Studies (GWAS)  
-GWAS_sample_function = function(inputA, inputB){                       # Define the function 'GWAS_function' that takes two inputs: 'inputA' and 'inputB'
-  step1 = inputA^2 + inputB                                            # Step 1: Calculate the square of inputA and add inputB to it.
+                                                                        # p-value should be 0.520511 thus null hypothesis; not statistically significant. 
+############################################# NOTE; STILL NEED TO DO BETTER ANNOTATIONS FOR THE REST OF THE WORK 
+# GENOME-WIDE ASSOCIATION STUDIES (GWAS)  
+# 5.1 We create a sample function to carry out an association test across all genotypes 
+GWAS_sample_function = function(inputA, inputB){                       # Sample 'GWAS_sample_function' that takes two inputs: 'inputA' and 'inputB'
+  step1 = inputA^2 + inputB                                            # Step 1: Calculate the square of inputA and adds inputB to it.
   step1 + 5                                                            # Step 2: Add 5 to the result of step1
 }
-GWAS_sample_function(3,3)                                              # Example of calling the function GWAS_sample_function(3, 3) in the console 
-****************
+GWAS_sample_function(3,3)                                              # Example of GWAS_sample_function(3,3) in the console which is 17. 
+
 association_test = function(inputA, inputB){                                        # We define the association test function which will perform a correlation test between inputA and inputB
   test_result = cor.test(inputA, inputB)                                                # Step 1: Perform a correlation test between the two input variables (inputA and inputB).
   test_result$p.value                                                                   # Step 2: Extract the p-value from the correlation test result (assocaiton).
