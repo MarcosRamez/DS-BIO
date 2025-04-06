@@ -20,9 +20,9 @@
 
 # DATA EXPLORATION 
 # 1.2b Renaming the downloaded datasets in R Source code to load in the R environment 
-    genotypes<-read_tsv("~/Downloads/GWAS_data/Chr12_Genotypes.tsv")        # load Chr12_Genotypes.tsv file into the `genotypes` dataframe.
-    phenotypes<-read_tsv("~/Downloads/GWAS_data/Phenotype_Height.tsv")      # load Phenotype_Height.tsv file into the `phenotypes` dataframe.
-    map<-read_tsv("~/Downloads/GWAS_data/Chr12_Map.tsv")                    # load Chr12_Map.tsv file into the `map` dataframe.
+    genotypes<-read_tsv("~/Downloads/GWAS_data/Chr12_Genotypes.tsv")        # load Chr12_Genotypes.tsv file into the `genotypes` dataframe. Data set found under 'Data' in environment (top right quarter) on R.
+    phenotypes<-read_tsv("~/Downloads/GWAS_data/Phenotype_Height.tsv")      # load Phenotype_Height.tsv file into the `phenotypes` dataframe. Data set found under 'Data' in environment (top right quarter) on R. 
+    map<-read_tsv("~/Downloads/GWAS_data/Chr12_Map.tsv")                    # load Chr12_Map.tsv file into the `map` dataframe. Data set found under 'Data' in environment (top right quarter) on R. 
 
           # In Genotypes data set for Chromosome 12; 
                   # Columns include Sample Code Names (ex. A404) 
@@ -30,7 +30,7 @@
                         # 0 - Homozygous for reference allele (ex. A&A); 2 reference alleles 
                         # 1 - Heterozygous for reference allele (ex. A&C); 1 reference allele, 1 alternative allele 
                         # 2 - Homozygous for alternative allele (ex. C&C); 2 alternative allele 
-                            # NOTE; we are looking at homogenous lines, thus dealing with 0 and 2 allele codes. 
+                            # NOTE; we are looking at homozygous lines, thus dealing with 0 and 2 allele codes only. 
           # In Phenotypes data set 
                   # Column 1 (Sample Name; ex. A404) 
                   # Column 2 (Height; ex. 60.9567...) 
@@ -48,22 +48,19 @@
         ggplot(map, aes(x=Position)) + geom_histogram()       # using the ggplot function, we map chromosomal positions (x-axis) and plot a histogram by binning the data count (y-axis) into discrete values.
 
 # 2.2 Pick a locus: Converting column datasets into a vector  
-    one_geno = as.numeric(genotypes[2,])                  # as.numeric function converts all quantitative values along the row. Qualitative values are listed as NA.
-                                                          # extracting row 2 from genotypes dataset and all columns of the genotypes dataframe
+    one_geno = as.numeric(genotypes[2,])                  # as.numeric function converts all quantitative values along row 2 in genotypes dataframe. Qualitative values are listed as NA not included.
+                                                          # List of values found under 'Values' in the objects/variables under (top right quarter). 
 # 2.3 Determining the allele frequency 
-    mean(one_geno)                                        # finding the mean of all the row 
-         ?mean                                            # R Documentation syntax method to open 'arithmetic mean' definition in the 'Help' view (bottom right quarter)  
-         one_geno                                         # will display the one_geno value list in the 'Console' view Console (bottom left quarter) of R                                   
     mean(one_geno, na.rm=TRUE)/2                          # computing the mean of one_geno and dividing the results by 2 to scale down the results. na.rm=TRUE ignores NA qualitative values.  
-
+                                                                        # Mean should be 0.7765727 
 # 2.4 Allele frequency across all loci 
-    apply(genotypes, 1, mean, na.rm=TRUE)/2               # vector representing the normalized mean genotype for each sample population
-
+    apply(genotypes, 1, mean, na.rm=TRUE)/2               # vector representing the normalized mean genotype for each sample population along row 1 of the genotype data frame and omitting the NA qualitiative values. 
+                                                                        # The formula is apply(X,Margin,Function,...)/2. Mean is divided by 2 thus normalized on a scale between 0 and 1. 
 # 2.5 Plot allele frequency across all loci
-    allele_frequencies = apply(genotypes, 1, mean, na.rm=TRUE)/2    # quantifiying the allele frequency; selecting all genotypes allele codes in row 1 and removing all NA values.
-        plot_data = tibble(allele_frequencies)                      # plotting the result using tibble function data frame 
+    allele_frequencies = apply(genotypes, 1, mean, na.rm=TRUE)/2    # quantifiying the allele frequency normalized mean; selecting all genotypes allele codes in row 1 and removing all NA values. Data set found under 'Values' in environment (top right quarter) on R.
+        plot_data = tibble(allele_frequencies)                      # converting the vectors into tibble and storing it into a column in the 'plot_data' data frame. Data set found under 'Data' in environment (top right quarter) on R.
 
-    ggplot(plot_data, aes(allele_frequencies)) + geom_histogram()   # plotting a histogram with allele frequencies in x axis and allele count in y axis
+    ggplot(plot_data, aes(allele_frequencies)) + geom_histogram()   # plotting a histogram with the normalized mean allele frequencies in x axis and count in y axis
                     # There are 504 samples across row 1 with an average value of 0.16 thus more homozygous alleles for reference allele (0) than homozygous alleles for alternative allele (2). 
                     # The total sum of the row is 80 which when divided by 2 equates to 40 samples of (2) and 464 samples of (0). 
 
@@ -73,12 +70,12 @@
 phenotypes$one_geno = as.numeric(one_geno)              # Converting 'one_geno' into numeric form and assigning it to the 'one_geno' column within the 'phenotypes' data frame which is accessed using the $. 
                                                              # 'Height' column already exists in the phenotypes data frame set so no need to do this.
 ggplot(phenotypes, aes(x=one_geno, y=Height)) +         # Creates a scatter plot using 'ggplot', with 'one_geno' on the x-axis and 'Height' on the y-axis from the 'phenotypes' dataset using aesthetic mapping.
-   geom_jitter(width = 0.2) +                                # Adds jittered points to the plot with a horizontal offset (width = 0.2) to reduce overplotting of points.
-   geom_smooth(method = 'lm')                                # Adds a linear regression line (`lm`) to show the trend between the genotype ('one_geno') and the phenotype ('Height').
+   geom_jitter(width=0.2) +                                # Adds jittered points to the plot with a horizontal offset (width = 0.2) to reduce overplotting of points.
+   geom_smooth(method='lm')                                # Adds a linear regression line ('lm') to show the trend between the genotype ('one_geno') and the phenotype ('Height').
 
 #############################################
 # 4.1 Statistical association between one genotype and the phenotype
-corTestResult = cor.test(phenotypes$Height, phenotypes$one_geno)    # Performs a correlation test between the 'Height' and 'one_geno' columns in the phenotypes data frame. Results stored in `corTestResult`.
+corTestResult = cor.test(phenotypes$Height, phenotypes$one_geno)    # Performs a correlation test between the 'Height' and 'one_geno' columns in the phenotypes data frame. Results stored in 'corTestResult'.
 corTestResult$p.value                                               # Assessing the p-value from the correlation test result run above.
 
 #############################################
@@ -88,14 +85,13 @@ GWAS_sample_function = function(inputA, inputB){                       # Define 
   step1 + 5                                                            # Step 2: Add 5 to the result of step1
 }
 GWAS_sample_function(3,3)                                              # Example of calling the function GWAS_sample_function(3, 3) in the console 
-
 ****************
 association_test = function(inputA, inputB){                                        # We define the association test function which will perform a correlation test between inputA and inputB
   test_result = cor.test(inputA, inputB)                                                # Step 1: Perform a correlation test between the two input variables (inputA and inputB).
   test_result$p.value                                                                   # Step 2: Extract the p-value from the correlation test result (assocaiton).
 }
 
-association_test(one_geno, phenotypes$Height)                                       # The function `association_test` is called using `one_geno` and `phenotypes$Height` as inputs.
-map$pvalues= apply(genotypes, 1, association_test,inputB=phenotypes$Height)         # The p-values from the `association_test` of each row 1 of `genotypes`, are stored in the `map$pvalues` vector
+association_test(one_geno, phenotypes$Height)                                       # The function 'association_test' is called using 'one_geno' and 'phenotypes$Height' as inputs.
+map$pvalues= apply(genotypes, 1, association_test,inputB=phenotypes$Height)         # The p-values from the 'association_test' of each row 1 of 'genotypes', are stored in the 'map$pvalues' vector
 ggplot(map, aes(x=Position, y=-log10(pvalues))) + 
     geom_point()                      # Scatter plot includes negative log-transformed p-values for the genome-wide association studies (GWAS) to visualize the significance.
