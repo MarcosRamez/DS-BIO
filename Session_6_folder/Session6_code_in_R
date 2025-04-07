@@ -87,19 +87,31 @@
     GWAS_sample_function(3,3)                                              # Example of GWAS_sample_function(3,3) in the console which is 17. 
 
 # 5.2 GWAS; Apply association test to every genotype
-    association_test <- function(geno, pheno) {                                # We are carrying out a function including the 'geno' and 'pheno' data sets.  
-      geno_numeric <- as.numeric(geno)                                         # as.numeric function converts all quantitative values in genotypes dataframe. Qualitative values listed as NA are not included.
-      test_result <- cor.test(geno_numeric, pheno)                             # performing a Pearson correlation test between 'geno' and 'pheno'.
-      return(test_result)                                                      # Return the test result so we can access it outside the function
+    association_test <- function(genotypes, phenotypes){                   # We are carrying out a function which includes the 'genotypes' and 'phenotypes' data sets.  
+      geno_numeric <- as.numeric(genotypes)                                # as.numeric function converts all quantitative values in genotypes dataframe. Qualitative values listed as NA are not included.
+      test_result <- cor.test(geno_numeric, phenotypes)                    # performing a Pearson correlation test between 'genotypes' and 'phenotypes'.
+      return(test_result)                                                  # return the test result so we can access it outside the function
     }
-    test_result <- association_test(genotypes[1, ], phenotypes$Height)         # running the association test between row 1 of the 'genotypes' and the 'phenotypes' Height.  
-    print(test_result)                                                         # prints a summary of the correlation test result above; cor -0.03000162 
-    print(test_result$p.value)                                                 # prints the p-value; 0.02342109
+    test_result <- association_test(genotypes[1, ], phenotypes$Height)     # running the association test between row 1 of the 'genotypes' and the 'phenotypes' Height.  
+    print(test_result)                                                     # prints a summary of the correlation test result above; cor -0.03000162 
+    print(test_result$p.value)                                             # prints the p-value; 0.02342109
 
 # 5.3 Plot the chromosome position against –log10(p value) 
-    get_p_values = function(genos, pheno){                                     # calculating the p values from the 'geno' and 'pheno' data sets and naming this function 'get_p_values'
-      apply(genos, 1, association_test , pheno)                                    # applyingthe association test function to each row as denoted by 1 and getting a p=value
-    }                                                                              
-    pvalue = get_p_values(genotypes, phenotypes$Height)                        # calling/executing the function above, but restricted to the genotypes row and phenotypes height. 
-    map = mutate(map, pvalue= pvalue)                                          # we add a new column 'p.value' to the map dataset using the mutate function 
-    ggplot(map, aes(x=Position, y=-log10(pvalue))) + geom_point()              # creating a scatterplot where the x-axis the position and the y-axis is pvalue 
+     get_p_values <- function(genotypes, phenotypes) {                             # calculating the p values from the 'genotypes' and 'phenotypes' data sets and naming this function 'get_p_values'
+          apply(genotypes, 1, function(geno_row) {                                       # applying the association test function to each row as denoted by 1 and getting a p value
+            result <- association_test(geno_row, phenotypes$Height)                # calling/executing the association test and storing it in 'result'
+            return(result$p.value)                                                 # extracting the p value from the 'result' 
+          })
+        }
+        pvalue <- get_p_values(genotypes, phenotypes)                              # running the get_p_values function and storing it in 'pvalue'
+        pvalue <- as.numeric(pvalue)                                               # converting p value objects into numeric form 
+        map$pvalue <- pvalue                                                       # adding the 'pvalue' as a column in the 'map' data frame
+        ggplot(map, aes(x = Position, y = -log10(pvalue))) +                       # creating a scatterplot of the 'map' data set with Position as x-axis and -log10(pvalue) as y-axis 
+          geom_point() +                                                                 # adding points to a plot   
+          labs(x = "Loci Position ", y = "-log10(p-value)", title = "GWAS;Relationship between Loci Position and Geno-Pheno Association") 
+
+
+
+
+
+
