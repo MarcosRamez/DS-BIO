@@ -48,7 +48,7 @@
         ggplot(map, aes(x=Position)) + geom_histogram()       # using the ggplot function, we map chromosomal positions (x-axis) and plot a histogram by binning the data count (y-axis) into discrete values.
 
 # 2.2 Pick a locus: Converting column datasets into a vector  
-    one_geno = as.numeric(genotypes[2,])                  # as.numeric function converts all quantitative values along row 2 in genotypes dataframe. Qualitative values are listed as NA not included.
+    one_geno = as.numeric(genotypes[2,])                  # as.numeric function converts all quantitative values along row 2 in genotypes dataframe. Qualitative values listed as NA are not included.
                                                           # List of values found under 'Values' in the objects/variables under (top right quarter). 
 # 2.3 Determining the allele frequency 
     mean(one_geno, na.rm=TRUE)/2                          # computing the mean of one_geno and dividing the results by 2 to scale down the results. na.rm=TRUE ignores NA qualitative values.  
@@ -67,32 +67,40 @@
 ############################################# 
 # GENOTYPE-PHENOTYPE ASSOCIATION
 # 3.1 Plot the association between one genotype and the phenotype 
-phenotypes$one_geno = as.numeric(one_geno)              # Converting 'one_geno' into numeric form and assigning it to the 'one_geno' column within the 'phenotypes' data frame which is added using the $. If you open 'phenotypes' data you will see the new column.
-                                                             # 'Height' column already exists in the phenotypes data frame set so no need to do this for height. 
-ggplot(phenotypes, aes(x=one_geno, y=Height)) +         # Using aesthetic mapping we create a scatter plot using 'ggplot', with 'one_geno' on the x-axis and 'Height' on the y-axis from the 'phenotypes' dataset. 
-   geom_jitter(width=0.2) +                                # Adds jittered points to the plot with a horizontal offset (width = 0.2) to reduce overplotting of points.
-   geom_smooth(method='lm')                                # Adds a linear regression line ('lm') to show the trend between the genotype ('one_geno') and the phenotype ('Height').
+    phenotypes$one_geno = as.numeric(one_geno)              # Converting 'one_geno' into numeric form and assigning it to the 'one_geno' column within the 'phenotypes' data frame which is added using the $. If you open 'phenotypes' data you will see the new column.
+                                                                # 'Height' column already exists in the phenotypes data frame set so no need to do this for height. 
+    ggplot(phenotypes, aes(x=one_geno, y=Height)) +         # Using aesthetic mapping we create a scatter plot using 'ggplot', with 'one_geno' on the x-axis and 'Height' on the y-axis from the 'phenotypes' dataset. 
+       geom_jitter(width=0.2) +                                 # Adds jittered points to the plot with a horizontal offset (width = 0.2) to reduce overplotting of points.
+       geom_smooth(method='lm')                                 # Adds a linear regression line ('lm') to show the trend between the genotype ('one_geno') and the phenotype ('Height').
 
 ############################################# 
 # 4.1 Statistical association between one genotype and the phenotype
-corTestResult = cor.test(phenotypes$Height, phenotypes$one_geno)    # Performs a correlation test between the 'Height' and 'one_geno' columns in the phenotypes data frame. Results stored in 'corTestResult'. Data set found under 'Data' in environment (top right quarter) on R.
-corTestResult$p.value                                               # Assessing the p-value from the correlation test result run above.
-                                                                        # p-value should be 0.520511 thus null hypothesis; not statistically significant. 
-############################################# NOTE; STILL NEED TO DO BETTER ANNOTATIONS FOR THE REST OF THE WORK 
+    corTestResult = cor.test(phenotypes$Height, phenotypes$one_geno)    # Performs a correlation test between the 'Height' and 'one_geno' columns in the phenotypes data frame. Results stored in 'corTestResult'. Data set found under 'Data' in environment (top right quarter) on R.
+    corTestResult$p.value                                               # Assessing the p-value from the correlation test result run above.
+                                                                            # p-value should be 0.520511 thus null hypothesis; not statistically significant. 
+############################################# 
 # GENOME-WIDE ASSOCIATION STUDIES (GWAS)  
 # 5.1 We create a sample function to carry out an association test across all genotypes 
-GWAS_sample_function = function(inputA, inputB){                       # Sample 'GWAS_sample_function' that takes two inputs: 'inputA' and 'inputB'
-  step1 = inputA^2 + inputB                                            # Step 1: Calculate the square of inputA and adds inputB to it.
-  step1 + 5                                                            # Step 2: Add 5 to the result of step1
-}
-GWAS_sample_function(3,3)                                              # Example of GWAS_sample_function(3,3) in the console which is 17. 
+    GWAS_sample_function = function(inputA, inputB){                       # Sample 'GWAS_sample_function' that takes two inputs: 'inputA' and 'inputB'
+      step1 = inputA^2 + inputB                                            # Step 1: Calculate the square of inputA and adds inputB to it.
+      step1 + 5                                                            # Step 2: Add 5 to the result of step1
+    }
+    GWAS_sample_function(3,3)                                              # Example of GWAS_sample_function(3,3) in the console which is 17. 
 
-association_test = function(inputA, inputB){                                        # We define the association test function which will perform a correlation test between inputA and inputB
-  test_result = cor.test(inputA, inputB)                                                # Step 1: Perform a correlation test between the two input variables (inputA and inputB).
-  test_result$p.value                                                                   # Step 2: Extract the p-value from the correlation test result (assocaiton).
-}
+# 5.2 GWAS for all; 
+ association_test = function(geno, pheno) {                                # We are carrying out a function including the 'geno' and 'pheno' data sets. 
+    geno_numeric = as.numeric(geno)                                        # as.numeric function converts all quantitative values in genotypes dataframe. Qualitative values listed as NA are not included.
+    test_result = cor.test(geno_numeric, pheno)                            # performing a Pearson correlation test between 'geno' and 'pheno'. 
+    test_result$p.value                                                    # we can retrieve the p-value from the correlation test performed above 
+  }
+  print (test_result)                                                      # prints a summary of the correlation test result above 
+  print (test_result$p.value)                                              # prints the p-value 
 
-association_test(one_geno, phenotypes$Height)                                       # The function 'association_test' is called using 'one_geno' and 'phenotypes$Height' as inputs.
-map$pvalues= apply(genotypes, 1, association_test,inputB=phenotypes$Height)         # The p-values from the 'association_test' of each row 1 of 'genotypes', are stored in the 'map$pvalues' vector
-ggplot(map, aes(x=Position, y=-log10(pvalues))) + 
-    geom_point()                      # Scatter plot includes negative log-transformed p-values for the genome-wide association studies (GWAS) to visualize the significance.
+# 5.3 Plotting 
+get_p_values = function(genos, pheno){                                     # calculating the p values from the 'geno' and 'pheno' data sets and naming this function 'get_p_values'
+  apply(genos, 1, association_test , pheno)                                    # applyingthe association test function to each row as denoted by 1 and getting a p=value
+}                                                                              
+pvalue = get_p_values(genotypes, phenotypes$Height)                        # calling/executing the function above, but restricted to the genotypes row and phenotypes height. 
+map = mutate(map, pvalue= pvalue)                                          # we add a new column 'p.value' to the map dataset using the mutate function 
+ggplot(map, aes(x=Position, y=-log10(pvalue))) + geom_point()              # creating a scatterplot where the x-axis the position and the y-axis is pvalue 
+
