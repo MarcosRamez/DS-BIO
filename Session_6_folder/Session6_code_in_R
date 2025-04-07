@@ -87,13 +87,14 @@
     GWAS_sample_function(3,3)                                              # Example of GWAS_sample_function(3,3) in the console which is 17. 
 
 # 5.2 GWAS; Apply association test to every genotype
-     association_test = function(geno, pheno) {                                # We are carrying out a function including the 'geno' and 'pheno' data sets. 
-        geno_numeric = as.numeric(geno)                                        # as.numeric function converts all quantitative values in genotypes dataframe. Qualitative values listed as NA are not included.
-        test_result = cor.test(geno_numeric, pheno)                            # performing a Pearson correlation test between 'geno' and 'pheno'. 
-        test_result$p.value                                                    # we can retrieve the p-value from the correlation test performed above 
-      }
-      print (test_result)                                                      # prints a summary of the correlation test result above 
-      print (test_result$p.value)                                              # prints the p-value 
+    association_test <- function(geno, pheno) {                                # We are carrying out a function including the 'geno' and 'pheno' data sets.  
+      geno_numeric <- as.numeric(geno)                                         # as.numeric function converts all quantitative values in genotypes dataframe. Qualitative values listed as NA are not included.
+      test_result <- cor.test(geno_numeric, pheno)                             # performing a Pearson correlation test between 'geno' and 'pheno'.
+      return(test_result)                                                      # Return the test result so we can access it outside the function
+    }
+    test_result <- association_test(genotypes[1, ], phenotypes$Height)         # running the association test between row 1 of the 'genotypes' and the 'phenotypes' Height.  
+    print(test_result)                                                         # prints a summary of the correlation test result above; cor -0.03000162 
+    print(test_result$p.value)                                                 # prints the p-value; 0.02342109
 
 # 5.3 Plot the chromosome position against –log10(p value) 
     get_p_values = function(genos, pheno){                                     # calculating the p values from the 'geno' and 'pheno' data sets and naming this function 'get_p_values'
